@@ -41,3 +41,4 @@ class Favorites(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
     user = db.relationship("User", back_populates="favorites")
     post = db.relationship("Post", back_populates="favorites")
+
