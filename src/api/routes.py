@@ -4,7 +4,10 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, make_response, jsonify, url_for, Blueprint
 from api.models import db, User, Post, Favorites
 from api.utils import generate_sitemap, APIException
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+import datetime 
+import jwt
+
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
@@ -34,7 +37,7 @@ def login_user():
     if not auth or not auth.username or not auth.password:  
         return make_response('could not verify', 401, {'WWW.Authentication': 'Basic realm: "login required"'})    
     
-    user = next((x for x in users if x.username == auth.username), None)
+    user = next((x for x in user if x.username == auth.username), None)
     if not user:
         return make_response('could not verify', 401, {'WWW.Authentication': 'Basic realm: "login required"'})
     
