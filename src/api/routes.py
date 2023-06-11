@@ -66,8 +66,9 @@ def add_favorite():
     data = request.get_json()
     favorite = Favorites(
         user_id=data['user_id'],
-        favorite_id=data['favorite_id'],
+        post_id=data['post_id'],
     )
+    
     db.session.add(favorite)
     db.session.commit()
     return "SUCCESS"
