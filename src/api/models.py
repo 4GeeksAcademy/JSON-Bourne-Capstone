@@ -12,13 +12,12 @@ class User(db.Model):
     posts = db.relationship("Post", back_populates="author")
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.username}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
-
+            "username": self.username,
         }
 
 class Post(db.Model):

@@ -55,11 +55,11 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-@api.route('/users/<int:user_id>', methods=['GET'])
-def get_user_(user_id):
-    user = User.query.filter_by(user_id=user_id).all()
-    serialized_users = [user.serialize() for user in user]
-    return jsonify(user=serialized_users)
+@api.route('/users/<int:id>', methods=['GET'])
+def get_user_(id):
+    user = User.query.filter_by(id=id).first()
+    #serialized_users = [user.serialize() for user in user]
+    return jsonify(user.serialize())
 
 @api.route('/users/favorites', methods=['POST'])
 def add_favorite():
