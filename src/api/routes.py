@@ -73,9 +73,9 @@ def add_favorite():
     db.session.commit()
     return "SUCCESS"
 
-@api.route('/users/favorites/<int:favorite_id>', methods=['DELETE'])
-def delete_favorite(favorite_id):
-    favorite = Favorites.query.get(favorite_id)
+@api.route('/users/favorites/<int:id>', methods=['DELETE'])
+def delete_favorite(id):
+    favorite = Favorites.query.get(id)
     if favorite:
         db.session.delete(favorite)
         db.session.commit()
