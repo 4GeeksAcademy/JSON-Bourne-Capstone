@@ -53,3 +53,31 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
+@api.route('/users/<int:id>', methods=['GET'])
+def get_user_(id):
+    user = User.query.filter_by(id=id).first()
+    #serialized_users = [user.serialize() for user in user]
+    return jsonify(user.serialize())
+
+@api.route('/users/favorites', methods=['POST'])
+def add_favorite():
+    data = request.get_json()
+    favorite = Favorites(
+        user_id=data['user_id'],
+        post_id=data['post_id'],
+    )
+    
+    db.session.add(favorite)
+    db.session.commit()
+    return "SUCCESS"
+
+@api.route('/users/favorites/<int:id>', methods=['DELETE'])
+def delete_favorite(id):
+    favorite = Favorites.query.get(id)
+    if favorite:
+        db.session.delete(favorite)
+        db.session.commit()
+        return "SUCCESS"
+    return "Favorite not found"

@@ -9,16 +9,15 @@ class User(db.Model):
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(80), unique=False, nullable=False)
     favorites = db.relationship("Favorites", back_populates="user")
-    posts = db.relationship("Post", back_populates="author")
+    posts = db.relationship("Post")
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.username}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
-
+            "username": self.username,
         }
 
 class Post(db.Model):
