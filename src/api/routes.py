@@ -1,34 +1,41 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import JWTManager, jwt_required
 from flask_jwt_extended import get_jwt_identity
 
+
 api = Blueprint('api', __name__)
 app = Flask(__name__)
 
-@app.route('/register', methods=['POST'])
-def signup_user():
-    data = request.get_json()
 
-    hashed_password = generate_password_hash(data['password'], method='sha256')
+@api.route('/signup', methods=['POST'])
+def signup():
+    # Retrieve request data
+    username = request.json.get('username')
+    password = request.json.get('password')
 
-    new_user = User(username=data['username'], password=hashed_password)
-    
-    # checking if that user already exists
-    existing_user = User.query.filter_by(username=data['username']).first()
-    if existing_user:
-        return jsonify({'message': 'User already exists!'}), 409  # HTTP status code for conflict
+    # Check if the email is already registered
+    if User.query.filter_by(username=username).first():
+        return jsonify(message='Username already registered'), 200
 
-    db.session.add(new_user)
-    db.session.commit()
+    # Create a new user object
+    new_user = User(username=username, password=password)
 
-    return jsonify({'message': 'registered successfully'}), 201  # HTTP status code for created
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify(message='Failed to register user'), 200
+
+    return jsonify(message='User registered successfully'), 200
 
 
 @api.route('/login', methods=['POST'])
@@ -38,6 +45,8 @@ def login():
 
     # Perform authentication
     user = User.query.filter_by(username=username).first()
+
+    if user is None or not password == user.password:
     if user is None or not user.check_password(password):
         return jsonify({"msg": "Incorrect email or password"}), 401
 
@@ -59,6 +68,8 @@ def handle_hello():
 @api.route('/users', methods=['GET'])
 @jwt_required()
 def get_user_(id):
+    user = User.query.filter_by(id=id).first()
+    # serialized_users = [user.serialize() for user in user]
     user_id = get_jwt_identity()
 # decorator on private routes
     user = User.query.filter_by(id=user_id).first()
@@ -66,6 +77,7 @@ def get_user_(id):
     if not user :
         return jsonify ({'message': 'user not found'})
     return jsonify(user.serialize())
+
 
 @api.route('/users/favorites', methods=['POST'])
 @jwt_required()
@@ -79,9 +91,11 @@ def add_favorite():
         user_id=user_id,
         post_id=data['post_id'],
     )
+
     db.session.add(favorite)
     db.session.commit()
     return "ADD SUCCESS"
+
 
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
@@ -94,5 +108,30 @@ def delete_favorite(id):
     if favorite.user_id==user_id:
         db.session.delete(favorite)
         db.session.commit()
+
+        return "SUCCESS"
+    return "Favorite not found"
+
+
+@api.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user_username = get_jwt_identity()
+    user = User.query.filter_by(username=current_user_username).first()
+
+    request_token = request.headers.get('Authorization')
+
+    if request_token and request_token.startswith('Bearer '):
+        stored_token = request_token.split('Bearer ')[1]
+
+    if stored_token == session.get('access_token'):
+        return jsonify({"username": user.username}), 200
+    else:
+        return jsonify(message='You are not authorized to view this page'), 401
+
+
+if __name__ == "__main__":
+    api.run()
         return "DELETE SUCCESS"
     return "Favorite not found"
+
