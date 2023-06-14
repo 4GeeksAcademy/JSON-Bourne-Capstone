@@ -4,10 +4,8 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
-from api.utils import generate_sitemap, APIException
-from werkzeug.security import generate_password_hash
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import JWTManager, jwt_required
+from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 
 
@@ -47,8 +45,8 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     if user is None or not password == user.password:
-    if user is None or not user.check_password(password):
-        return jsonify({"msg": "Incorrect email or password"}), 401
+        if user is None or not user.check_password(password):
+            return jsonify({"msg": "Incorrect email or password"}), 401
 
     # Generate access token
     access_token = create_access_token(identity=username)
@@ -65,18 +63,20 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-@api.route('/users', methods=['GET'])
+@api.route('/users/<int:id>', methods=['GET'])
 @jwt_required()
 def get_user_(id):
     user = User.query.filter_by(id=id).first()
-    # serialized_users = [user.serialize() for user in user]
-    user_id = get_jwt_identity()
-# decorator on private routes
-    user = User.query.filter_by(id=user_id).first()
-    #serialized_users = [user.serialize() for user in user]
-    if not user :
-        return jsonify ({'message': 'user not found'})
-    return jsonify(user.serialize())
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    stored_token = session.get('access_token')
+    request_token = request.headers.get('Authorization', '').split('Bearer ')[1]
+    if stored_token != request_token:
+        return jsonify({'message': 'Invalid access token'}), 401
+
+    return jsonify(user.serialize()), 200
 
 
 @api.route('/users/favorites', methods=['POST'])
@@ -132,6 +132,5 @@ def protected():
 
 if __name__ == "__main__":
     api.run()
-        return "DELETE SUCCESS"
-    return "Favorite not found"
+
 
