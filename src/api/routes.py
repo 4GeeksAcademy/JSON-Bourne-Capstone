@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import JWTManager, jwt_required
+from flask_jwt_extended import get_jwt_identity
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
@@ -55,11 +56,12 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-@api.route('/users/<int:id>', methods=['GET'])
+@api.route('/users', methods=['GET'])
 @jwt_required()
 def get_user_(id):
+    user_id = get_jwt_identity()
 # decorator on private routes
-    user = User.query.filter_by(id=id).first()
+    user = User.query.filter_by(id=user_id).first()
     #serialized_users = [user.serialize() for user in user]
     if not user :
         return jsonify ({'message': 'user not found'})
@@ -69,13 +71,14 @@ def get_user_(id):
 @jwt_required()
 def add_favorite():
     data = request.get_json()
-    favorite = Favorites(
-        user_id=data['user_id'],
-        post_id=data['post_id'],
-    )
-    user = User.query.filter_by(id=id).first()
+    user_id = get_jwt_identity()
+    user = User.query.filter_by(id=user_id).first()
     if not user :
         return jsonify ({'message': 'user not found'})
+    favorite = Favorites(
+        user_id=user_id,
+        post_id=data['post_id'],
+    )
     db.session.add(favorite)
     db.session.commit()
     return "ADD SUCCESS"
@@ -84,10 +87,11 @@ def add_favorite():
 @jwt_required()
 def delete_favorite(id):
     favorite = Favorites.query.get(id)
-    user = User.query.filter_by(id=id).first()
+    user_id = get_jwt_identity()
+    user = User.query.filter_by(id=user_id).first()
     if not user :
         return jsonify ({'message': 'user not found'})
-    if favorite:
+    if favorite.user_id==user_id:
         db.session.delete(favorite)
         db.session.commit()
         return "DELETE SUCCESS"
