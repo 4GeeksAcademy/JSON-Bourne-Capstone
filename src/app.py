@@ -22,6 +22,9 @@ app.url_map.strict_slashes = False
 app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Replace with your own secret key
 jwt = JWTManager(app)
 
+app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Replace with your own secret key
+jwt = JWTManager(app)
+
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
