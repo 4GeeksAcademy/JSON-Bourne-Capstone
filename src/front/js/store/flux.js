@@ -20,6 +20,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setStore({token: null});
 		},
 
+		//LOGIN !!
+		login: async (username, password) => {
+			try {
+				const opts = {
+					method: "POST",
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify({
+						username: username,
+						password: password,
+					}),
+				}
+			}
+		},
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
