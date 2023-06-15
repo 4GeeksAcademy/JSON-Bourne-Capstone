@@ -1,15 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useHistory } from "react-router-dom";
-import "../../styles/index.css";
-import { Link } from "react-router-dom";
-import { Router } from "@reach/router";
+import "../../styles/login.css";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 
 export const Login = () => {
-  const {store, action } = useContext(Context);
-  const [email, setEmail] = useState("");
+  const {store, actions } = useContext(Context);
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const history = useNavigate()
 
  // LOG OUT !!
  const handleOut = () => {
@@ -19,8 +21,12 @@ export const Login = () => {
 // LOGIN !!
 console.log("this is your token", store.token);
   const handleClick = () => {
-    actions.login(email, password).then();
+    actions.login(username, password).then();
   };
+
+  useEffect (() => {
+    if (store.token && store.token != "" && store.token != undefined) history("/");
+  });
 
   return (
     <div className="text-center mt-5">
@@ -37,9 +43,9 @@ console.log("this is your token", store.token);
           <input
             //className="d-flex alignInput"
             type="text"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             //className="d-flex alignInput"
@@ -65,4 +71,3 @@ console.log("this is your token", store.token);
 
 
 
-}

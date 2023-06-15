@@ -69,25 +69,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 					const resp = await fetch(
-						`${process.env.BACKEND_URL}/api/hello`
-					)
-				}
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+						`${process.env.BACKEND_URL}/api/hello`,
+						opts
+					);
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+					if (resp.status === 401) {
+						console.log("Unauthorized: Token is invalid or expierd");
+						return;
+					}
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
-};
-
-export default getState;
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({ message: data.message });
+					  } else {
+						console.log("Error loading message from backend:", resp.status);
+					  }
+					} catch (error) {
+					  console.error("Error loading message from backend:", error);
+					}
+				  },
+				},
+			  };
+			};
+			
+			export default getState;
+			
