@@ -5,9 +5,6 @@ from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import get_jwt_identity
-
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
@@ -71,15 +68,15 @@ def get_user_(id):
     if not user:
         return jsonify({'message': 'User not found'}), 404
 
-    stored_token = session.get('access_token')
-    request_token = request.headers.get('Authorization', '').split('Bearer ')[1]
-    if stored_token != request_token:
-        return jsonify({'message': 'Invalid access token'}), 401
+    # stored_token = session.get('access_token')
+    # request_token = request.headers.get('Authorization', '').split('Bearer ')[1]
+    # if stored_token != request_token:
+    #     return jsonify({'message': 'Invalid access token'}), 401
 
     return jsonify(user.serialize()), 200
 
 
-@api.route('/users/favorites', methods=['POST'])
+@api.route('/users/favorites/<int:id>', methods=['POST'])
 @jwt_required()
 def add_favorite():
     data = request.get_json()
@@ -111,6 +108,13 @@ def delete_favorite(id):
 
         return "SUCCESS"
     return "Favorite not found"
+
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    # Remove the stored access token from the session
+    session.pop('access_token', None)
+    return jsonify({'message': 'Logged out successfully'}), 200
 
 if __name__ == "__main__":
     api.run()
