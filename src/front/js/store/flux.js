@@ -13,7 +13,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (token && token != "" && token != undefined)
 					setStore({token: token});
 			},
-		signout: 
+		//LOGOUT
+		signout: () => {
+			sessionStorage.removeItem("token");
+			console.log('SIGNINGOUT');
+			setStore({token: null});
+		},
 
 			getMessage: async () => {
 				try{
