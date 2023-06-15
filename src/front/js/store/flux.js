@@ -30,9 +30,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 						username: username,
 						password: password,
 					}),
+				};
+
+				const resp = await fetch (
+					`${process.env.BACKEND_URL}/api/login`,
+					opts
+				);
+				if (resp.status !==200) {
+					console.log('THERE WAS A RESPONSE STATUS ERROR');
+					return false;
 				}
-			}
-		},
+			
+		
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
