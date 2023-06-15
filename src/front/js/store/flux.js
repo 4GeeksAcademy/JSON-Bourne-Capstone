@@ -40,20 +40,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log('THERE WAS A RESPONSE STATUS ERROR');
 					return false;
 				}
+
+				const data = await resp.json();
+				console.log ("TOCKEN BACK HERE", data);
+				sessionStorage.setItem("token", data.access_token);
+				setStore({token: data.access_token});
+				return true;
+			}	catch (error) {
+				console.error("THERE WAS A CATCH ERROR LOADING FROM BK END HERE!!", error);
+			}
+		},
+
 			
-		
 			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+				const store = getStore();
+
+				// Check if a token exists
+				if (!store.token) {
+					console.log("No token found");
+					return;
 				}
-			},
+
+				const opts = {
+					headers: {
+						Authorization: `Beare ${store.token}`,
+					},
+				};
+
+				try {
+					const resp = await fetch(
+						`${process.env.BACKEND_URL}/api/hello`
+					)
+				}
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
