@@ -29,24 +29,19 @@ console.log("this is your token", store.token);
   });
 
   return (
-    <div className="text-center mt-5">
-      <h1>Login</h1>
-      {store.token && store.token !== "" && store.token !== undefined ? (
+    <div className="">
+     <div className="text-center mt-5">
+      <h1>ai GORE</h1>
         <div>
-          "You are logged in" + {store.token}
-          <button className="btn btn-primary" onClick={handleOut}>
-            SIGN OUT
-          </button>
-        </div>
-      ) : (
-        <div>
+          <div className="m-5">
           <input
             //className="d-flex alignInput"
             type="text"
             placeholder="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          />
+          /></div>
+          <div className="m-5">
           <input
             //className="d-flex alignInput"
             type="password"
@@ -54,13 +49,20 @@ console.log("this is your token", store.token);
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleClick}>
+          </div>
+         
+          <div className="d-flex justify-content-center allign-items-center">
+          <button className="m-3 btn btn-primary" onClick={handleClick}>
             LOGIN
           </button>
+          <button className="m-3 btn btn-primary" onClick={handleClick}>
+              REGISTER
+          </button>
+          </div>
         </div>
-      )}
-    </div>
-  );
+     </div>
+   </div>
+  )
 };
 
 
