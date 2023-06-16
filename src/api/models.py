@@ -1,42 +1,49 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class User (db.Model):
+class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    favorites = db.relationship("Favorites", back_populates="user")
-    posts = db.relationship("Post")
+    password = db.Column(db.String(80), nullable=False)
+    posts = db.relationship('Post', backref='author')
+    favorites = db.relationship('Favorites', backref='user')
+    comments = db.relationship('Comment', backref='user')
 
     def __repr__(self):
         return f'<User {self.username}>'
 
     def serialize(self):
         return {
-            "id": self.id,
-            "username": self.username,
+            'id': self.id,
+            'username': self.username,
         }
 
 class Post(db.Model):
-    __tablename__ = "post"
+    __tablename__ = 'post'
     id = db.Column(db.Integer, primary_key=True)
-    file_name = db.Column(db.String(30), nullable=False)
-    name_of_creation = db.Column(db.String(30), unique=True, nullable=False)
-    media_type = db.Column(db.String(30), nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    description = db.Column(db.String(30), nullable=False)
-    author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    favorites = db.relationship("Favorites", back_populates="post")
-    author = db.relationship("User", back_populates="posts")
-    
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    favorites = db.relationship('Favorites', backref='post')
+    comments = db.relationship('Comment', backref='post')
+
+    def __repr__(self):
+        return f'<Post {self.title}>'
 
 class Favorites(db.Model):
-    __tablename__ = "favorite"
+    __tablename__ = 'favorites'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
-    user = db.relationship("User", back_populates="favorites")
-    post = db.relationship("Post", back_populates="favorites")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+class Comment(db.Model):
+    __tablename__ = 'comment'
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
