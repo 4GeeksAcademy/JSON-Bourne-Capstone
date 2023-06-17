@@ -19,13 +19,14 @@ export const Login = () => {
   };
 
 // LOGIN !!
-console.log("this is your token", store.token);
-  const handleClick = () => {
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
     actions.login(username, password).then();
   };
 
   useEffect (() => {
-    if (store.token && store.token != "" && store.token != undefined) history("/");
+    if (store.token && store.token != "" && store.token != undefined) history("/home");
   });
 
   return (
@@ -33,6 +34,7 @@ console.log("this is your token", store.token);
      <div className="text-center mt-5">
       <h1>ai GORE</h1>
         <div>
+          <form onSubmit={handleSubmit}>
           <div className="m-5">
           <input
             //className="d-flex alignInput"
@@ -52,13 +54,14 @@ console.log("this is your token", store.token);
           </div>
          
           <div className="d-flex justify-content-center allign-items-center">
-          <button className="m-3 btn btn-primary" onClick={handleClick}>
+          <button className="m-3 btn btn-primary" type="submit">
             LOGIN
           </button>
-          <button className="m-3 btn btn-primary" onClick={handleClick}>
+          <button className="m-3 btn btn-primary" type="submit">
               REGISTER
           </button>
           </div>
+        </form> 
         </div>
      </div>
    </div>

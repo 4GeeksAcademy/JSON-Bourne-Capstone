@@ -49,7 +49,7 @@ def login():
     return jsonify(access_token=access_token)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
+@api.route('/home', methods=['POST', 'GET'])
 def handle_hello():
 
     response_body = {
