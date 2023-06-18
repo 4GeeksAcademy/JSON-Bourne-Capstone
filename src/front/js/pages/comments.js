@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
 
-function ImageWithComments({ imageUrl }) {
+function Comments({ imageUrl }) {
   const [showComments, setShowComments] = useState(false);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-
+  console.log(imageUrl, 'ÍAM IMAGE')
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
@@ -39,4 +39,4 @@ function ImageWithComments({ imageUrl }) {
   );
 }
 
-export default ImageWithComments;
+export default Comments;

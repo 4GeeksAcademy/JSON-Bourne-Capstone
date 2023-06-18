@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, session
-from api.models import db, User, Post, Favorites
+from api.models import db, User, Post, Favorites, Comment
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 api = Blueprint('api', __name__)
@@ -49,14 +49,25 @@ def login():
     return jsonify(access_token=access_token)
 
 
-@api.route('/home', methods=['POST', 'GET'])
-def handle_hello():
+@api.route('/comments', methods=['POST', 'GET'])
+def comments():
+    data = request.get_json()
+    text = data.get('text')
+    created_at = data.get('created_at')
+    user_id = data.get('user_id')
+    post_id = data.get('post_id')
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+    new_comment = Comment(
+        text=text,
+        created_at=created_at,
+        user_id=user_id,
+        post_id=post_id,
+    )
 
-    return jsonify(response_body), 200
+    db.session.add(new_comment)
+    db.session.commit()
+
+    return jsonify("new comment",new_comment), 200
 
 
 @api.route('/users/<int:id>', methods=['GET'])

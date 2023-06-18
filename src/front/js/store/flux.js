@@ -51,6 +51,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		},
 
+		//Comments !!
+		comments: async (text, created_at, user_id, post_id) => {
+			try {
+			  const opts = {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+				  text: text,
+				  created_at: created_at,
+				  user_id: user_id,
+				  post_id: post_id,
+				}),
+			  };
+		  
+			  const resp = await fetch(
+				`${process.env.BACKEND_URL}/api/comments`,
+				opts
+			  );
+		  
+			  if (resp.status !== 200) {
+				console.log('THERE WAS A RESPONSE STATUS ERROR');
+				return false;
+			  }
+		  
+			  const data = await resp.json();
+			  console.log("TOKEN BACK HERE", data);
+			  sessionStorage.setItem("token", data.access_token);
+			  setStore({ token: data.access_token });
+			  return true;
+			} catch (error) {
+			  console.error("THERE WAS A CATCH ERROR LOADING FROM BACKEND HERE!!", error);
+			}
+		  },
+		  
 			
 			getMessage: async () => {
 				const store = getStore();

@@ -2,8 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import Comments from "./comments";
 
-export const Home = () => {
+export const Home = ({name}) => {
 	const { store, actions } = useContext(Context);
 
 
@@ -11,10 +12,9 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
+			<h1>{name}</h1>
+			
+			<Comments imageUrl={rigoImageUrl}/>
 			<div className="alert alert-info">
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 			</div>
