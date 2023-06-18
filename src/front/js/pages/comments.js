@@ -1,19 +1,20 @@
-
 import React, { useState } from 'react';
 
-function Comments({ imageUrl }) {
+function Comments({ imageUrl, actions }) {
   const [showComments, setShowComments] = useState(false);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-  console.log(imageUrl, 'ÍAM IMAGE')
+
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    setComments([...comments, comment]);
-    setComment('');
+    actions.comments(text, created_at, user_id, post_id).then(() => {
+      setComments([...comments, comment]);
+      setComment('');
+    });
   };
 
   const toggleComments = () => {

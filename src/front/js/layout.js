@@ -29,8 +29,8 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Login />} path="/" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<Home name="Mike"/>} path="/home" />
-                        <Route element={<Comments imageUrl="https://lh3.googleusercontent.com/hwau7OVWx96XaME5KpRuJ0I_MscrerK6SbRH1UwYHYaxIDQQtn7RZK02LDSfBzCreidFgDsJeXyqDct6EZiH6vsV=w640-h400-e365-rj-sc0x00ffffff" />} path="/comments" />
+                        <Route element={<Home name="CLICK IMAGE"/>} path="/home" />
+                        <Route element={<Comments />} path="/comments" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
