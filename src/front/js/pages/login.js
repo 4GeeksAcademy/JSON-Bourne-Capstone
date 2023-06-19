@@ -31,13 +31,13 @@ console.log("this is your token", store.token);
   return (
     <div className="">
      <div className="text-center mt-5">
-      <h1>ai GORE</h1>
+      <h1>AIγορα</h1>
         <div>
           <div className="m-5">
           <input
             //className="d-flex alignInput"
             type="text"
-            placeholder="username"
+            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           /></div>
@@ -45,7 +45,7 @@ console.log("this is your token", store.token);
           <input
             //className="d-flex alignInput"
             type="password"
-            placeholder="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
