@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Comments({ imageUrl, actions }) {
+function Comments({ imageUrl, actions, user_id, post_id }) {
   const [showComments, setShowComments] = useState(false);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
@@ -9,12 +9,22 @@ function Comments({ imageUrl, actions }) {
     setComment(event.target.value);
   };
 
-  const handleCommentSubmit = (event) => {
+  const handleCommentSubmit = async (event) => {
     event.preventDefault();
-    actions.comments(text, created_at, user_id, post_id).then(() => {
-      setComments([...comments, comment]);
-      setComment('');
-    });
+    try {
+      const created_at = new Date();
+      const success = await actions.comments(comment, created_at, user_id, post_id);
+      if (success) {
+        setComments([...comments, comment]);
+        setComment('');
+      } else {
+        
+        console.log('Comment creation failed');
+      }
+    } catch (error) {
+      
+      console.error('Error creating comment:', error);
+    }
   };
 
   const toggleComments = () => {

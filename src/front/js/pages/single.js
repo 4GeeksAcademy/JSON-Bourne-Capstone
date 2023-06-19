@@ -1,28 +1,38 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
+import Comments from "./comments";
 
-export const Single = props => {
-	const { store, actions } = useContext(Context);
-	const params = useParams();
+export const Single = (props) => {
+	
+  const { store, actions } = useContext(Context);
+  const params = useParams();
 
-	return (
-		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
-			<img src={rigoImageUrl} />
-			<hr className="my-4" />
-
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
-				</span>
-			</Link>
-		</div>
-	);
+  return (
+    <div className="text-center mt-5">
+      <h1>Hello Click Image GoTo Home!!</h1>
+	  console.log("ÏAM HERERERER")
+      <p>
+        <Link to="/">
+          <img src={rigoImageUrl} alt="Rigo" />
+        </Link>
+      </p>
+      <div className="alert alert-info">
+        {store.message ||
+          "Loading message from the backend (make sure your python backend is running)..."}
+      </div>
+      <p>
+        This boilerplate comes with lots of documentation:{" "}
+        <a href="https://start.4geeksacademy.com/starters/react-flask">
+          Read documentation
+        </a>
+      </p>
+    </div>
+  );
 };
 
 Single.propTypes = {
-	match: PropTypes.object
+  match: PropTypes.object,
 };

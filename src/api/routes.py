@@ -108,6 +108,15 @@ def create_post():
 
     return jsonify({'message': 'Post created successfully'}), 200
 
+@api.route('/single/<int:theid>', methods=['GET'])
+def get_single(theid):
+    item = User.query.get(theid)
+    if not item:
+        return jsonify({'message': 'Item not found'}), 404
+
+    return jsonify({'item': item.serialize()}), 200
+
+
 
 @api.route('/users/favorites', methods=['POST'])
 @jwt_required()
