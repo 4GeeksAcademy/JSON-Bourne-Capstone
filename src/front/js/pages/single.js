@@ -34,7 +34,8 @@ export const Single = (props) => {
           </div>
         </div>
       </div>
-      <h1>SINGLE VIEW</h1>
+      <h1>SINGLE VIEW  handleDoubleCLick img
+    navigate"/"</h1>
     </div>
   );
 };
