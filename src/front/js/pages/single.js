@@ -1,34 +1,40 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import Comments from "./comments";
 
 export const Single = (props) => {
-	
   const { store, actions } = useContext(Context);
   const params = useParams();
+  const navigate = useNavigate();
+  console.log("IAM HERERERER");
+
+  const commentData = {
+    user_id: "user_id_value",
+    post_id: "post_id_value"
+  };
+
+  const handleDoubleCLick = () => {
+    navigate("/");
+  };
 
   return (
     <div className="text-center mt-5">
-      <h1>Hello Click Image GoTo Home!!</h1>
-	  console.log("ÏAM HERERERER")
-      <p>
-        <Link to="/">
-          <img src={rigoImageUrl} alt="Rigo" />
-        </Link>
-      </p>
-      <div className="alert alert-info">
-        {store.message ||
-          "Loading message from the backend (make sure your python backend is running)..."}
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6">
+            <Comments actions={actions} commentData={commentData} />
+          </div>
+          <div className="col-lg-6" onDoubleClick={handleDoubleCLick}>
+            <div>
+              <img src={rigoImageUrl} alt="Rigo" className="img-fluid" />
+            </div>
+          </div>
+        </div>
       </div>
-      <p>
-        This boilerplate comes with lots of documentation:{" "}
-        <a href="https://start.4geeksacademy.com/starters/react-flask">
-          Read documentation
-        </a>
-      </p>
+      <h1>SINGLE VIEW</h1>
     </div>
   );
 };

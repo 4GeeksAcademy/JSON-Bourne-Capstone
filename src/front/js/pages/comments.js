@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-function Comments({ imageUrl, actions, user_id, post_id }) {
-  const [showComments, setShowComments] = useState(false);
+function Comments({ actions, commentData }) {
+  const { user_id, post_id } = commentData;
+  const [showComments, setShowComments] = useState(true);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
 
@@ -18,11 +19,9 @@ function Comments({ imageUrl, actions, user_id, post_id }) {
         setComments([...comments, comment]);
         setComment('');
       } else {
-        
         console.log('Comment creation failed');
       }
     } catch (error) {
-      
       console.error('Error creating comment:', error);
     }
   };
@@ -33,7 +32,6 @@ function Comments({ imageUrl, actions, user_id, post_id }) {
 
   return (
     <div>
-      <img src={imageUrl} alt="Image" onClick={toggleComments} />
       {showComments && (
         <div>
           <h3>Comments</h3>
