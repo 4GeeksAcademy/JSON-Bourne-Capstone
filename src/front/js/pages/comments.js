@@ -26,24 +26,16 @@ function Comments({ actions, commentData }) {
     }
   };
 
-  const toggleComments = () => {
-    setShowComments(!showComments);
-  };
-
   return (
     <div>
-      {showComments && (
-        <div>
-          <h3>Comments</h3>
-          {comments.map((comment, index) => (
-            <p key={index}>{comment}</p>
-          ))}
-          <form onSubmit={handleCommentSubmit}>
-            <input type="text" value={comment} onChange={handleCommentChange} />
-            <button type="submit">Add Comment</button>
-          </form>
-        </div>
-      )}
+      <h3>Comments</h3>
+      {comments.map((comment, index) => (
+        <p key={index}>{comment}</p>
+      ))}
+      <form onSubmit={handleCommentSubmit}>
+        <input type="text" value={comment} onChange={handleCommentChange} />
+        <button type="submit">Add Comment</button>
+      </form>
     </div>
   );
 }

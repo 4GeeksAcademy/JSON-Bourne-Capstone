@@ -49,17 +49,18 @@ def login():
     return jsonify(access_token=access_token)
 
 
-@api.route('/comments', methods=['POST', 'GET'])
+@api.route('/comments', methods=['POST'])
 def comments():
     data = request.get_json()
+    print("IAM DATA",data)
     text = data.get('text')
-    created_at = data.get('created_at')
+    # created_at = data.get('created_at')
     user_id = data.get('user_id')
     post_id = data.get('post_id')
 
     new_comment = Comment(
         text=text,
-        created_at=created_at,
+        # created_at=created_at,
         user_id=user_id,
         post_id=post_id,
     )
@@ -67,7 +68,13 @@ def comments():
     db.session.add(new_comment)
     db.session.commit()
 
-    return jsonify("new comment",new_comment), 200
+    return jsonify(new_comment.serialize()), 200
+
+@api.route('/comments', methods=['GET'])
+def get_comments():
+    comment_list= Comment.query.all()
+    all_comments= list(map(lambda comment:comment.serialize(),comment_list))
+    return jsonify(all_comments), 200
 
 
 @api.route('/users/<int:id>', methods=['GET'])
