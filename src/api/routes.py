@@ -75,6 +75,14 @@ def get_user_(id):
 
     return jsonify(user.serialize()), 200
 
+
+
+@app.route('/api/posts', methods=['GET'])
+def get_posts():
+    posts = Post.query.all()
+    return jsonify([post.to_dict() for post in posts])
+
+
 @api.route('/posts', methods=['POST'])
 @jwt_required()
 def create_post():
@@ -127,7 +135,6 @@ def add_favorite():
     db.session.commit()
 
     return jsonify({'message': 'Favorite added successfully'}), 200
-
 
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()

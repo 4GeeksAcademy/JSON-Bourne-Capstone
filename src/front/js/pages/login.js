@@ -56,7 +56,7 @@ console.log("this is your token", store.token);
             LOGIN
           </button>
           <button className="m-3 btn btn-primary" onClick={handleClick}>
-              REGISTER
+            REGISTER
           </button>
           </div>
         </div>

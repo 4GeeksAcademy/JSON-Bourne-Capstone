@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
-import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import { useState } from "react";
 
-export const Single = props => {
-	const { store, actions } = useContext(Context);
-	const params = useParams();
+export function Single() {
 
-	return (
-		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
-			<img src={rigoImageUrl} />
-			<hr className="my-4" />
+    const [file, setFile] = useState()
 
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
-				</span>
-			</Link>
-		</div>
-	);
-};
 
-Single.propTypes = {
-	match: PropTypes.object
-};
+    const submit = async event => {
+        event.preventDefault()
+
+        const formData = new FormData();
+        formData.append("image", file)
+        }
+        const fileSelected = event => {
+            const file = event.target.files[0]
+            setFile(file)
+        }
+    return (
+        <div className="flex flex-col items-center justify-center">
+        
+        <form onSubmit={submit}>
+        <input onChange={fileSelected} type="file"></input>
+        <button type="submit">Submit</button>
+        </form>
+        
+        </div>
+    )
+}

@@ -42,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				const data = await resp.json();
-				console.log ("TOCKEN BACK HERE", data);
+				console.log ("TOKEN BACK HERE", data);
 				sessionStorage.setItem("token", data.access_token);
 				setStore({token: data.access_token});
 				return true;

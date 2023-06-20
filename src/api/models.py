@@ -31,8 +31,17 @@ class Post(db.Model):
     favorites = db.relationship('Favorites', backref='post')
     comments = db.relationship('Comment', backref='post')
 
-    def __repr__(self):
-        return f'<Post {self.title}>'
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'content': self.content,
+            'created_at': self.created_at,
+            'author_id': self.author_id,
+        }
+
+
+
 
 class Favorites(db.Model):
     __tablename__ = 'favorites'
