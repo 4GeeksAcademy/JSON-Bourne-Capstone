@@ -54,13 +54,11 @@ def comments():
     data = request.get_json()
     print("IAM DATA",data)
     text = data.get('text')
-    # created_at = data.get('created_at')
     user_id = data.get('user_id')
     post_id = data.get('post_id')
 
     new_comment = Comment(
         text=text,
-        # created_at=created_at,
         user_id=user_id,
         post_id=post_id,
     )

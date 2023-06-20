@@ -76,6 +76,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(dataObj)
 	  }
+	  //HARD CODE user_id AND post_id UP THERE
     );
 
     console.log('Response status:', resp.status);

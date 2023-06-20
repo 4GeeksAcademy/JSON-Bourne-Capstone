@@ -25,10 +25,10 @@ function Comments({ actions, commentData }) {
       console.error('Error creating comment:', error);
     }
   };
-
+ // neeed to map through posts and match them to comments 
   return (
     <div>
-      <h3>Comments</h3>
+      <h3>Comment</h3>
       {comments.map((comment, index) => (
         <p key={index}>{comment}</p>
       ))}
