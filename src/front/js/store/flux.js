@@ -59,17 +59,23 @@ const getState = ({ getStore, getActions, setStore }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text: text,
-        created_at: created_at,
-        user_id: user_id,
-        post_id: post_id,
+        // created_at: created_at,
+        user_id: 1,
+        post_id: 1
       }),
     };
 
     console.log('POST request options:', opts);
-
+	let dataObj={ text: text,
+        user_id: user_id,
+        post_id: post_id}
     const resp = await fetch(
       `${process.env.BACKEND_URL}/api/comments`,
-      opts
+      {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(dataObj)
+	  }
     );
 
     console.log('Response status:', resp.status);
