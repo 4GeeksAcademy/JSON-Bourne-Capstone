@@ -51,6 +51,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		},
 
+		//Comments !!
+	comments: async (text, created_at, user_id, post_id) => {
+  try {
+    const opts = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: text,
+        // created_at: created_at,
+        user_id: 1,
+        post_id: 1
+      }),
+    };
+
+    console.log('POST request options:', opts);
+	let dataObj={ text: text,
+        user_id: user_id,
+        post_id: post_id}
+    const resp = await fetch(
+      `${process.env.BACKEND_URL}/api/comments`,
+      {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(dataObj)
+	  }
+	  //HARD CODE user_id AND post_id UP THERE
+    );
+
+    console.log('Response status:', resp.status);
+
+    if (resp.status !== 200) {
+      console.log('There was a response status error');
+      return false;
+    }
+
+    const data = await resp.json();
+    console.log("Response data:", data);
+
+    sessionStorage.setItem("token", data.access_token);
+    setStore({ token: data.access_token });
+    return true;
+  } catch (error) {
+    console.error("There was a catch error loading from the backend:", error);
+  }
+},
+
+		  
 			
 			getMessage: async () => {
 				const store = getStore();
