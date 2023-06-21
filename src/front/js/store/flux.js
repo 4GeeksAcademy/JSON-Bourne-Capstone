@@ -9,14 +9,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			syncTokenFromSessionStorage: () => {
 				const token = sessionStorage.getItem("token");
-				console.log("SYNCINGSESIONTOKEN");
+				console.log("SYNCING SESSION TOKEN" + token);
 				if (token && token != "" && token != undefined)
 					setStore({token: token});
 			},
 		//LOGOUT
 		signout: () => {
 			sessionStorage.removeItem("token");
-			console.log('SIGNINGOUT');
+			console.log('SIGNING OUT');
 			setStore({token: null});
 		},
 
@@ -33,24 +33,57 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					`${process.env.BACKEND_URL}/api/login`,
+					`https://brennybaker-improved-space-couscous-44pjwqvprwg27-3001.preview.app.github.dev/api/login`,
 					opts
+					
 				);
+				console.log('Request URL:', resp)
 				if (resp.status !==200) {
 					console.log('THERE WAS A RESPONSE STATUS ERROR');
 					return false;
 				}
 
 				const data = await resp.json();
-				console.log ("TOCKEN BACK HERE", data);
+				console.log ("TOKEN HERE", data);
 				sessionStorage.setItem("token", data.access_token);
 				setStore({token: data.access_token});
 				return true;
 			}	catch (error) {
-				console.error("THERE WAS A CATCH ERROR LOADING FROM BK END HERE!!", error);
+				console.error("THERE WAS A CATCH ERROR LOADING FROM BACK END HERE!!", error);
 			}
 		},
-
+		signup: async (username, password) => {
+			try {
+			  const opts = {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+				  username: username,
+				  password: password,
+				  confirm_password: password,
+				}),
+			  };
+		  
+			  const resp = await fetch(
+				`https://brennybaker-improved-space-couscous-44pjwqvprwg27-3001.preview.app.github.dev/api/signup`,
+				opts
+			  );
+		  
+			  if (resp.status === 201 || 200) {
+				console.log("User registered successfully");
+				return true;
+			  } else if (resp.status === 409) {
+				console.log("Username already registered");
+				return false;
+			  } else {
+				console.log("Failed to register user" + resp.status);
+				return false;
+			  }
+			} catch (error) {
+			  console.error("Error occurred during registration:", error);
+			  return false;
+			}
+		  },
 		//Comments !!
 	comments: async (text, created_at, user_id, post_id) => {
   try {
@@ -59,7 +92,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text: text,
-        // created_at: created_at,
+        created_at: created_at,
         user_id: 1,
         post_id: 1
       }),
@@ -68,7 +101,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     console.log('POST request options:', opts);
 	let dataObj={ text: text,
         user_id: user_id,
-        post_id: post_id}
+        post_id: post_id,
+		created_at: created_at}
     const resp = await fetch(
       `${process.env.BACKEND_URL}/api/comments`,
       {

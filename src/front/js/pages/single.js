@@ -9,7 +9,6 @@ export const Single = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
-  console.log("IAM HERERERER");
 
   const commentData = {
     user_id: "user_id_value",

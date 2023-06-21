@@ -15,10 +15,10 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
-    def serialize(self):
+    def to_dict(self):
         return {
-            'id': self.id,
-            'username': self.username,
+            "user_id": self.id,
+            "username": self.username
         }
 
 class Post(db.Model):
