@@ -74,10 +74,16 @@
 		]
 	},
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.354.0",
 		"@headlessui/react": "^1.7.15",
 		"@heroicons/react": "^2.0.18",
+		"bootstrap": "^5.3.0",
+		"dotenv": "^16.3.1",
+		"multer": "^1.4.5-lts.1",
+		"openai": "^3.3.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-bootstrap": "^2.7.4",
 		"react-dom": "^16.8.4",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.12.0"

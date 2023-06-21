@@ -45,41 +45,35 @@ export const Login = () => {
 
   return (
     <div className="">
-      <div className="text-center mt-5">
-        <h1>aiGORA</h1>
+     <div className="text-center mt-5">
+      <h1>AIγορα</h1>
         <div>
-          <form onSubmit={handleClick}>
-            <div className="m-5">
-              <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                autoComplete="username"
-              />
-            </div>
-            <div className="m-5">
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
-              />
-            </div>
-
-            <div className="d-flex justify-content-center align-items-center">
-              <button className="m-3 btn btn-primary" type="submit" onClick={handleRedirect}>
-                Login
-              </button>
-              <button className="m-3 btn btn-primary" onClick={handleOut}>
-                Logout
-              </button>
-              <button className="m-3 btn btn-primary" type="submit" onClick={handleSignUpPage}>
-                Sign Up
-              </button>
-            </div>
-          </form>
+          <div className="m-5">
+          <input
+            //className="d-flex alignInput"
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          /></div>
+          <div className="m-5">
+          <input
+            //className="d-flex alignInput"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          </div>
+         
+          <div className="d-flex justify-content-center allign-items-center">
+          <button className="m-3 btn btn-primary" onClick={handleClick}>
+            LOGIN
+          </button>
+          <button className="m-3 btn btn-primary" onClick={handleClick}>
+              REGISTER
+          </button>
+          </div>
         </div>
       </div>
     </div>
