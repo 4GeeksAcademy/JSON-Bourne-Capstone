@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites, Comment
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+import sys 
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
@@ -17,7 +18,7 @@ def signup():
 
     # Check if the email is already registered
     if User.query.filter_by(username=username).first():
-        return jsonify(message='Username already registered'), 200
+        return jsonify(message='Username already registered'), 409  
 
     # Create a new user object
     new_user = User(username=username, password=password)
@@ -27,9 +28,12 @@ def signup():
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify(message='Failed to register user'), 200
+        print(sys.exc_info())
+        return jsonify(message='Failed to register user'), 500 
 
-    return jsonify(message='User registered successfully'), 200
+    user_id = new_user.id
+
+    return jsonify(message='User registered successfully', user_id=user_id), 201
 
 
 @api.route('/login', methods=['POST'])
@@ -52,7 +56,7 @@ def login():
 @api.route('/comments', methods=['POST'])
 def comments():
     data = request.get_json()
-    print("IAM DATA",data)
+    print("I AM DATA",data)
     text = data.get('text')
     user_id = data.get('user_id')
     post_id = data.get('post_id')
@@ -95,7 +99,8 @@ def get_user_(id):
 @jwt_required()
 def create_post():
     data = request.get_json()
-    user_id = data.get('user_id') 
+    user_id = data.get('user_id')
+    post_id = data.get('post_id')
 
     user = User.query.filter_by(id=user_id).first()
 
@@ -105,13 +110,15 @@ def create_post():
     post = Post(
         title=data['title'],
         content=data['content'],
-        author=user
+        author=user,
+        post_id=post_id
+
     )
 
     db.session.add(post)
     db.session.commit()
 
-    return jsonify({'message': 'Post created successfully'}), 200
+    return jsonify({'message': 'Post created successfully', 'post_id': post.id}), 200
 
 @api.route('/single/<int:theid>', methods=['GET'])
 def get_single(theid):
