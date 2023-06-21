@@ -3,9 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import Explore  from "./pages/explore";
+import { Home } from "./pages/home";
+import  Comments  from "./pages/comments";
+import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
+import { SignUp } from "./pages/signup"
 
 
 
@@ -28,9 +31,9 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Login />} path="/" />
+                        <Route element={<SignUp />} path="signup" />
                         <Route element={<Explore />} path="/explore" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Comment />} path="/comment" />
+                        <Route element={<Comments />} path="/comments" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

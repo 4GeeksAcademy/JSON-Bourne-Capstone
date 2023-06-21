@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites, Comment
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+import sys 
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
@@ -17,7 +18,7 @@ def signup():
 
     # Check if the email is already registered
     if User.query.filter_by(username=username).first():
-        return jsonify(message='Username already registered'), 200
+        return jsonify(message='Username already registered'), 409  
 
     # Create a new user object
     new_user = User(username=username, password=password)
@@ -27,9 +28,12 @@ def signup():
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        return jsonify(message='Failed to register user'), 200
+        print(sys.exc_info())
+        return jsonify(message='Failed to register user'), 500 
 
-    return jsonify(message='User registered successfully'), 200
+    user_id = new_user.id
+
+    return jsonify(message='User registered successfully', user_id=user_id), 201
 
 
 @api.route('/login', methods=['POST'])
@@ -49,14 +53,30 @@ def login():
     return jsonify(access_token=access_token)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+@api.route('/comments', methods=['POST'])
+def comments():
+    data = request.get_json()
+    print("I AM DATA",data)
+    text = data.get('text')
+    user_id = data.get('user_id')
+    post_id = data.get('post_id')
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+    new_comment = Comment(
+        text=text,
+        user_id=user_id,
+        post_id=post_id,
+    )
 
-    return jsonify(response_body), 200
+    db.session.add(new_comment)
+    db.session.commit()
+
+    return jsonify(new_comment.serialize()), 200
+
+@api.route('/comments', methods=['GET'])
+def get_comments():
+    comment_list= Comment.query.all()
+    all_comments= list(map(lambda comment:comment.serialize(),comment_list))
+    return jsonify(all_comments), 200
 
 
 @api.route('/users/<int:id>', methods=['GET'])
@@ -87,7 +107,8 @@ def get_posts():
 @jwt_required()
 def create_post():
     data = request.get_json()
-    user_id = data.get('user_id') 
+    user_id = data.get('user_id')
+    post_id = data.get('post_id')
 
     user = User.query.filter_by(id=user_id).first()
 
@@ -97,13 +118,24 @@ def create_post():
     post = Post(
         title=data['title'],
         content=data['content'],
-        author=user
+        author=user,
+        post_id=post_id
+
     )
 
     db.session.add(post)
     db.session.commit()
 
-    return jsonify({'message': 'Post created successfully'}), 200
+    return jsonify({'message': 'Post created successfully', 'post_id': post.id}), 200
+
+@api.route('/single/<int:theid>', methods=['GET'])
+def get_single(theid):
+    item = User.query.get(theid)
+    if not item:
+        return jsonify({'message': 'Item not found'}), 404
+
+    return jsonify({'item': item.serialize()}), 200
+
 
 
 @api.route('/users/favorites', methods=['POST'])

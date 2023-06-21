@@ -1,32 +1,47 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { useHistory } from "react-router-dom";
 import "../../styles/login.css";
-import { Link, useNavigate } from "react-router-dom";
-
-
-
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const {store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const history = useNavigate()
+  const history = useNavigate();
 
- // LOG OUT !!
- const handleOut = () => {
+  // LOG OUT !!
+  const handleOut = () => {
     actions.signout();
   };
 
-// LOGIN !!
-console.log("this is your token", store.token);
-  const handleClick = () => {
-    actions.login(username, password).then();
+  // LOGIN !!
+  const handleClick = async (e) => {
+    e.preventDefault();
+    console.log("Username:", username);
+    console.log("Password:", password);
+    const loginSuccess = await actions.login(username, password);
+    console.log("Login success:", loginSuccess);
   };
 
-  useEffect (() => {
-    if (store.token && store.token != "" && store.token != undefined) history("/");
-  });
+  const handleRedirect = () => {
+    // Perform your logic to determine whether to redirect or not
+    if (store.token && store.token !== "" && store.token !== undefined) {
+      history("/single/:id");
+    } else {
+
+      console.log("Redirect prevented");
+    }
+  };
+
+  useEffect(() => {
+    if (store.token && store.token !== "" && store.token !== undefined) {
+      history("/single/:id");
+    }
+  }, [store.token, history]);
+
+  const handleSignUpPage = () => {
+    history("/signup");
+  };
 
   return (
     <div className="">
@@ -37,7 +52,7 @@ console.log("this is your token", store.token);
           <input
             //className="d-flex alignInput"
             type="text"
-            placeholder="Username"
+            placeholder="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           /></div>
@@ -45,7 +60,7 @@ console.log("this is your token", store.token);
           <input
             //className="d-flex alignInput"
             type="password"
-            placeholder="Password"
+            placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -56,20 +71,11 @@ console.log("this is your token", store.token);
             LOGIN
           </button>
           <button className="m-3 btn btn-primary" onClick={handleClick}>
-            REGISTER
+              REGISTER
           </button>
           </div>
         </div>
-     </div>
-   </div>
-  )
+      </div>
+    </div>
+  );
 };
-
-
-
-
-
-
-
-
-
