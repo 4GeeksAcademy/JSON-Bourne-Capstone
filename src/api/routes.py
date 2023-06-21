@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, session
-from api.models import db, User, Post, Favorites
+from api.models import db, User, Post, Favorites, Comment
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 api = Blueprint('api', __name__)
@@ -161,3 +161,13 @@ def logout():
 
 if __name__ == "__main__":
     api.run()
+
+@api.route('/comments', methods=['POST', 'GET'])
+def comments():
+    data = request.get_json()
+    text = data.get('text')
+    created_at = data.get('created_at')
+    user_id = data.get('user_id')
+    post_id = data.get('post_id')
+
+

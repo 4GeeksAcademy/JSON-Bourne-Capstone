@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Explore } from "./pages/explore";
+import Explore  from "./pages/explore";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 

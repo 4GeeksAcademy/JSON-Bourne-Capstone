@@ -21,8 +21,7 @@ export function Single() {
         <form onSubmit={submit}>
         <input onChange={fileSelected} type="file"></input>
         <button type="submit">Submit</button>
-        </form>
-        
+        </form>     
         </div>
     )
 }

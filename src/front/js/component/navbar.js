@@ -8,21 +8,20 @@ export const Navbar = () => {
     <nav className="navbar navbar-light bg-light">
       <div className="container">
         <Link to="/">
-          <span className="navbar-brand mb-0 h1">Login Page</span>
+          <span className="navbar-brand mb-0 h1">Login</span>
         </Link>
         <div className="ml-auto">
           {!store.token ? (
-            <Link to="/login">
-              <button className="btn btn-primary">Shortcut to Explore (Code Out Later)</button>
-            </Link>
-          ) : (
+            <>
+              <Link to="/explore">
+                <button className="btn btn-primary">Explore</button>
+              </Link> 
+                        <Link to="/single">
+                <button className="btn btn-secondary">Single</button>
+              </Link>
+            </>
+          )  :(
             <Link to="/explore">
-              <button
-                onClick={() => actions.signout()}
-                className="btn btn-primary"
-              >
-                Logout
-              </button>
             </Link>
           )}
         </div>

@@ -1,0 +1,12 @@
+.entirePage {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.eachCard {
+    width: 500px;
+}
+
+.eachCard img {
+    width: 100%;
+}
