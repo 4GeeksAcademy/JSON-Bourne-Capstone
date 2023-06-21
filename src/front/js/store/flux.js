@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
-			posts: ["s3://storingaigoraphotos/OVNI.jpeg", "s3://storingaigoraphotos/Faro.jpg"]
+			posts: ["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/640px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg"]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
