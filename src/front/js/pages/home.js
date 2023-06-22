@@ -7,7 +7,7 @@ export const Home = () => {
 
   const handleImageClick = () => {
   
-    navigate("/single/1");
+    navigate("/single/:id");
   };
 
   return (

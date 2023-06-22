@@ -15,7 +15,7 @@ export const SignUp = () => {
     if (password === confirmPassword) {
       const success = await actions.signup(username, password);
       if (success) {
-        history("/");
+        history("/explore");
       }
     } else if (password !== confirmPassword) {
       alert("Passwords do not match");

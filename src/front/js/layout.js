@@ -2,13 +2,10 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { SignUp } from "./pages/signup"
-import Explore from "./pages/explore";
-
-
+import { Explore } from "./pages/explore";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login } from "./pages/login";
@@ -30,7 +27,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/" />
                         <Route element={<SignUp />} path="signup" />
                         <Route element={<Explore />} path="/explore" />
-                        <Route element={<Single />} path="/single" />
+                        <Route element={<Single />} path="/single/:id" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
