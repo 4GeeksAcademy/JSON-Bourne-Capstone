@@ -194,12 +194,5 @@ def logout():
 if __name__ == "__main__":
     api.run()
 
-@api.route('/comments', methods=['POST', 'GET'])
-def comments():
-    data = request.get_json()
-    text = data.get('text')
-    created_at = data.get('created_at')
-    user_id = data.get('user_id')
-    post_id = data.get('post_id')
 
 

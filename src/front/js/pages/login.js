@@ -44,7 +44,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="">
+    <div className="body">
      <div className="text-center mt-5">
       <h1>AIγορα</h1>
         <div>
@@ -67,11 +67,11 @@ export const Login = () => {
           </div>
          
           <div className="d-flex justify-content-center allign-items-center">
-          <button className="m-3 btn btn-primary" onClick={handleClick}>
+          <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             LOGIN
           </button>
-          <button className="m-3 btn btn-primary" onClick={handleClick}>
-              REGISTER
+          <button className="m-3 btn btn-warning" id="signup" onClick={handleClick}>
+              Sign Up
           </button>
           </div>
         </div>
