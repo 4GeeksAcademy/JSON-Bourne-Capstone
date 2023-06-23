@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
-			posts: ["https://cdn.britannica.com/55/188355-050-D5E49258/Salvatore-Corsitto-The-Godfather-Marlon-Brando-Francis.jpg", "https://media.newyorker.com/photos/5c882173b52af22cd6fe65c9/master/w_2560%2Cc_limit/720318_ra623.jpg", "https://www.indiewire.com/wp-content/uploads/2022/03/Al-Pacino-Godfather.jpg?w=3000&h=2000&crop=1", "https://decider.com/wp-content/uploads/2017/03/the-godfather.jpg?quality=80&strip=all" ]
+			posts: ["https://steamuserimages-a.akamaihd.net/ugc/29606766018333081/5FCC3DECF7BA68C0C053AC44C1166AA2D510D15C/", "https://e0.pxfuel.com/wallpapers/237/863/desktop-wallpaper-apotheon-hermes-platformer-resolution-games-and-background-hermes-logo.jpg", "https://i.ytimg.com/vi/_vg-jl6_L_U/maxresdefault.jpg" ]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
