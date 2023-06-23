@@ -21,7 +21,9 @@ export const Explore = () => {
         return (
           <div className="eachCard" key={index}>
             <h1>Some title</h1>
-            <img src={item.image} alt={`Image ${index}`} />
+            <Link to={`/single/${item.id}`}>
+              <img src={item.image} alt={`Image ${index}`} />
+            </Link>
           </div>
         );
       })}
