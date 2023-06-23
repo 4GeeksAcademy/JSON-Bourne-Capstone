@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					`https://brennybaker-improved-space-couscous-44pjwqvprwg27-3001.preview.app.github.dev/api/login`,
+					`https://brennybaker-redesigned-succotash-7vw694jg4g3xvxv-3001.preview.app.github.dev/api/login`,
 					opts
 					
 				);
@@ -65,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  };
 		  
 			  const resp = await fetch(
-				`https://brennybaker-improved-space-couscous-44pjwqvprwg27-3001.preview.app.github.dev/api/signup`,
+				`https://brennybaker-redesigned-succotash-7vw694jg4g3xvxv-3001.preview.app.github.dev/api/signup`,
 				opts
 			  );
 		  

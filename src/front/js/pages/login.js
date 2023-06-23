@@ -10,9 +10,7 @@ export const Login = () => {
   const history = useNavigate();
 
   // LOG OUT !!
-  const handleOut = () => {
-    actions.signout();
-  };
+
 
   // LOGIN !!
   const handleClick = async (e) => {
@@ -26,7 +24,7 @@ export const Login = () => {
   const handleRedirect = () => {
     // Perform your logic to determine whether to redirect or not
     if (store.token && store.token !== "" && store.token !== undefined) {
-      history("/single/:id");
+      history("/explore");
     } else {
 
       console.log("Redirect prevented");
@@ -35,7 +33,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (store.token && store.token !== "" && store.token !== undefined) {
-      history("/single/:id");
+      history("/explore");
     }
   }, [store.token, history]);
 
@@ -70,7 +68,7 @@ export const Login = () => {
           <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             LOGIN
           </button>
-          <button className="m-3 btn btn-warning" id="signup" onClick={handleClick}>
+          <button className="m-3 btn btn-warning" id="signup" onClick={handleSignUpPage}>
               Sign Up
           </button>
           </div>
