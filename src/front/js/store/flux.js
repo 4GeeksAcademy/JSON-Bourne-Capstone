@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					`https://brennybaker-redesigned-succotash-7vw694jg4g3xvxv-3001.preview.app.github.dev/api/login`,
+					`https://brennybaker-fluffy-garbanzo-pv5jp7w5gq4f7qw9-3001.preview.app.github.dev/api/login`,
 					opts
 					
 				);
@@ -65,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  };
 		  
 			  const resp = await fetch(
-				`https://brennybaker-redesigned-succotash-7vw694jg4g3xvxv-3001.preview.app.github.dev/api/signup`,
+				`https://brennybaker-fluffy-garbanzo-pv5jp7w5gq4f7qw9-3001.preview.app.github.dev/api/signup`,
 				opts
 			  );
 		  
@@ -104,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         post_id: post_id,
 		created_at: created_at}
     const resp = await fetch(
-      `${process.env.BACKEND_URL}/api/comments`,
+      `https://brennybaker-fluffy-garbanzo-pv5jp7w5gq4f7qw9-3001.preview.app.github.dev/api/comments`,
       {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -186,40 +186,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							gridContainer.appendChild(postDiv);
 						});
 					});
-				},
-						//Comments !!
- 		comments: async (text, created_at, user_id, post_id) => {
-			try {
-			  const opts = {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-				  text: text,
-				  created_at: created_at,
-				  user_id: user_id,
-				  post_id: post_id,
-				}),
-			  };
-
-			  const resp = await fetch(
-				`${process.env.BACKEND_URL}/api/comments`,
-				opts
-			  );
-
-			  if (resp.status !== 200) {
-				console.log('THERE WAS A RESPONSE STATUS ERROR');
-				return false;
-			  }
-
-			  const data = await resp.json();
-			  console.log("TOKEN BACK HERE", data);
-			  sessionStorage.setItem("token", data.access_token);
-			  setStore({ token: data.access_token });
-			  return true;
-			} catch (error) {
-			  console.error("THERE WAS A CATCH ERROR LOADING FROM BACKEND HERE!!", error);
-			}
-		  },
+				},	
 
 				},
 			  };
