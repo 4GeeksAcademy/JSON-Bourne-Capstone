@@ -15,10 +15,10 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
-    def serialize(self):
+    def to_dict(self):
         return {
-            'id': self.id,
-            'username': self.username,
+            "user_id": self.id,
+            "username": self.username
         }
 
 class Post(db.Model):
@@ -31,8 +31,16 @@ class Post(db.Model):
     favorites = db.relationship('Favorites', backref='post')
     comments = db.relationship('Comment', backref='post')
 
-    def __repr__(self):
-        return f'<Post {self.title}>'
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'content': self.content,
+            'created_at': self.created_at,
+            'author_id': self.author_id,
+        }
+
+
 
 class Favorites(db.Model):
     __tablename__ = 'favorites'
@@ -44,6 +52,18 @@ class Comment(db.Model):
     __tablename__ = 'comment'
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.Date, default=datetime.utcnow().date())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+    def __repr__(self):
+        return f'<Comment {self.text}>'
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'text': self.text,
+            'created_at': self.created_at,
+            'user_id': self.user_id,
+            'post_id': self.post_id,
+        }

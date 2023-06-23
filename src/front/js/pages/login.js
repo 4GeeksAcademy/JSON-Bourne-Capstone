@@ -1,37 +1,50 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { useHistory } from "react-router-dom";
 import "../../styles/login.css";
-import { Link, useNavigate } from "react-router-dom";
-
-
-
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const {store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const history = useNavigate()
+  const history = useNavigate();
 
- // LOG OUT !!
- const handleOut = () => {
-    actions.signout();
+  // LOG OUT !!
+
+
+  // LOGIN !!
+  const handleClick = async (e) => {
+    e.preventDefault();
+    console.log("Username:", username);
+    console.log("Password:", password);
+    const loginSuccess = await actions.login(username, password);
+    console.log("Login success:", loginSuccess);
   };
 
-// LOGIN !!
-console.log("this is your token", store.token);
-  const handleClick = () => {
-    actions.login(username, password).then();
+  const handleRedirect = () => {
+    // Perform your logic to determine whether to redirect or not
+    if (store.token && store.token !== "" && store.token !== undefined) {
+      history("/explore");
+    } else {
+
+      console.log("Redirect prevented");
+    }
   };
 
-  useEffect (() => {
-    if (store.token && store.token != "" && store.token != undefined) history("/");
-  });
+  useEffect(() => {
+    if (store.token && store.token !== "" && store.token !== undefined) {
+      history("/explore");
+    }
+  }, [store.token, history]);
+
+  const handleSignUpPage = () => {
+    history("/signup");
+  };
 
   return (
-    <div className="">
+    <div className="body">
      <div className="text-center mt-5">
-      <h1>ai GORE</h1>
+      <h1>AIγορα</h1>
         <div>
           <div className="m-5">
           <input
@@ -52,24 +65,15 @@ console.log("this is your token", store.token);
           </div>
          
           <div className="d-flex justify-content-center allign-items-center">
-          <button className="m-3 btn btn-primary" onClick={handleClick}>
+          <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             LOGIN
           </button>
-          <button className="m-3 btn btn-primary" onClick={handleClick}>
-              REGISTER
+          <button className="m-3 btn btn-warning" id="signup" onClick={handleSignUpPage}>
+              Sign Up
           </button>
           </div>
         </div>
-     </div>
-   </div>
-  )
+      </div>
+    </div>
+  );
 };
-
-
-
-
-
-
-
-
-

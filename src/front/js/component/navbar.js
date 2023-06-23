@@ -1,29 +1,55 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    actions.signout();
+  };
+
+  const handleHomeClick = () => {
+    if (store.token) {
+      navigate("/explore");
+    }
+  };
+
+  useEffect(() => {
+    if (store.token && location.pathname === "/") {
+      // Redirect to "/explore" when user is logged in and home button is clicked
+      navigate("/explore");
+    }
+  }, [store.token, location.pathname, navigate]);
+
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
       <div className="container">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1">HOME PVT ROUTE</span>
+        <Link
+          to="/"
+          className="navbar-brand mb-0 h1"
+          onClick={handleHomeClick}
+        >
+          {store.token ? "Home" : "Login"}
         </Link>
         <div className="ml-auto">
-          {!store.token ? (
-            <Link to="/login">
-              <button className="btn btn-primary">Login</button>
-            </Link>
+          {location.pathname !== "/signup" && !store.token ? (
+            <>
+              <Link to="/explore">
+                <button className="btn btn-primary">Explore</button>
+              </Link>
+              <Link to="/single">
+                <button className="btn btn-secondary">Single</button>
+              </Link>
+            </>
           ) : (
-            <Link to="/login">
-              <button
-                onClick={() => actions.signout()}
-                className="btn btn-primary"
-              >
+            store.token && (
+              <button className="btn btn-primary" onClick={handleLogout}>
                 Logout
               </button>
-            </Link>
+            )
           )}
         </div>
       </div>
