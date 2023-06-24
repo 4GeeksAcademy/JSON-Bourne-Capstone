@@ -16,6 +16,7 @@ export const Login = () => {
 
   // LOGIN !!
   const handleClick = async (e) => {
+    console.log("text")
     e.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
@@ -26,7 +27,7 @@ export const Login = () => {
   const handleRedirect = () => {
     // Perform your logic to determine whether to redirect or not
     if (store.token && store.token !== "" && store.token !== undefined) {
-      history("/single/:id");
+      history("/explore");
     } else {
 
       console.log("Redirect prevented");
@@ -35,12 +36,13 @@ export const Login = () => {
 
   useEffect(() => {
     if (store.token && store.token !== "" && store.token !== undefined) {
-      history("/single/:id");
+      history("/explore");
     }
   }, [store.token, history]);
 
   const handleSignUpPage = () => {
     history("/signup");
+    actions.signup(username, password);
   };
 
   return (
@@ -70,7 +72,7 @@ export const Login = () => {
           <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             LOGIN
           </button>
-          <button className="m-3 btn btn-warning" id="signup" onClick={handleClick}>
+          <button className="m-3 btn btn-warning" id="signup" onClick={handleSignUpPage}> 
               Sign Up
           </button>
           </div>

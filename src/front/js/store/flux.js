@@ -13,15 +13,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (token && token != "" && token != undefined)
 					setStore({token: token});
 			},
-		//LOGOUT
+		
+		
+			//LOGOUT
 		signout: () => {
 			sessionStorage.removeItem("token");
 			console.log('SIGNING OUT');
 			setStore({token: null});
 		},
 
-		//LOGIN !!
+		//LOGIN 
 		login: async (username, password) => {
+
 			try {
 				const opts = {
 					method: "POST",
@@ -33,10 +36,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					`https://brennybaker-improved-space-couscous-44pjwqvprwg27-3001.preview.app.github.dev/api/login`,
-					opts
+					process.env.BACKEND_URL + "api/login",
+					opts, 
 					
 				);
+				
+				
+
 				console.log('Request URL:', resp)
 				if (resp.status !==200) {
 					console.log('THERE WAS A RESPONSE STATUS ERROR');
@@ -52,6 +58,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.error("THERE WAS A CATCH ERROR LOADING FROM BACK END HERE!!", error);
 			}
 		},
+		
+		// SIGN UP
 		signup: async (username, password) => {
 			try {
 			  const opts = {
@@ -65,7 +73,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  };
 		  
 			  const resp = await fetch(
-				`https://brennybaker-improved-space-couscous-44pjwqvprwg27-3001.preview.app.github.dev/api/signup`,
+				`${process.env.BACKEND_URL}/api/signup`,
 				opts
 			  );
 		  
@@ -84,7 +92,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  return false;
 			}
 		  },
-		//Comments !!
+		
+		
+		  //Comments 
 	comments: async (text, created_at, user_id, post_id) => {
   try {
     const opts = {
@@ -110,7 +120,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(dataObj)
 	  }
-	  //HARD CODE user_id AND post_id UP THERE
     );
 
     console.log('Response status:', resp.status);
@@ -132,7 +141,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 },
 
 		  
-			
+			// get message
 			getMessage: async () => {
 				const store = getStore();
 
@@ -169,7 +178,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  console.error("Error loading message from backend:", error);
 					}
 				  },
-				// HOME/ EXPLORE
+
+
+
+
+				// EXPLORE
 				explore:()=>{
 					fetch('/api/single')
 					.then(response => response.json())
@@ -187,42 +200,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						});
 					});
 				},
-						//Comments !!
- 		comments: async (text, created_at, user_id, post_id) => {
-			try {
-			  const opts = {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-				  text: text,
-				  created_at: created_at,
-				  user_id: user_id,
-				  post_id: post_id,
-				}),
-			  };
-
-			  const resp = await fetch(
-				`${process.env.BACKEND_URL}/api/comments`,
-				opts
-			  );
-
-			  if (resp.status !== 200) {
-				console.log('THERE WAS A RESPONSE STATUS ERROR');
-				return false;
 			  }
-
-			  const data = await resp.json();
-			  console.log("TOKEN BACK HERE", data);
-			  sessionStorage.setItem("token", data.access_token);
-			  setStore({ token: data.access_token });
-			  return true;
-			} catch (error) {
-			  console.error("THERE WAS A CATCH ERROR LOADING FROM BACKEND HERE!!", error);
 			}
-		  },
-
-				},
-			  };
 			};
 
 			export default getState;
