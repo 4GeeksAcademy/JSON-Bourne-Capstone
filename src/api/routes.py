@@ -4,11 +4,10 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites, Comment
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
-import sys 
+import sys
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
-
 
 @api.route('/signup', methods=['POST'])
 def signup():
@@ -29,12 +28,11 @@ def signup():
     except Exception as e:
         db.session.rollback()
         print(sys.exc_info())
-        return jsonify(message='Failed to register user'), 500 
+        return jsonify(message='Failed to register user'), 500
 
     user_id = new_user.id
 
     return jsonify(message='User registered successfully', user_id=user_id), 201
-
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -72,12 +70,12 @@ def comments():
 
     return jsonify(new_comment.serialize()), 200
 
+
 @api.route('/comments', methods=['GET'])
 def get_comments():
     comment_list= Comment.query.all()
     all_comments= list(map(lambda comment:comment.serialize(),comment_list))
     return jsonify(all_comments), 200
-
 
 @api.route('/users/<int:id>', methods=['GET'])
 @jwt_required()
@@ -95,13 +93,10 @@ def get_user_(id):
 
     return jsonify(user.serialize()), 200
 
-
-
 @app.route('/api/posts', methods=['GET'])
 def get_posts():
     posts = Post.query.all()
     return jsonify([post.to_dict() for post in posts])
-
 
 @api.route('/posts', methods=['POST'])
 @jwt_required()
@@ -112,15 +107,16 @@ def create_post():
 
     user = User.query.filter_by(id=user_id).first()
 
+
     if not user:
         return jsonify({'message': 'User not found'}), 404
+
 
     post = Post(
         title=data['title'],
         content=data['content'],
         author=user,
         post_id=post_id
-
     )
 
     db.session.add(post)
@@ -128,15 +124,15 @@ def create_post():
 
     return jsonify({'message': 'Post created successfully', 'post_id': post.id}), 200
 
+
 @api.route('/single/<int:theid>', methods=['GET'])
 def get_single(theid):
     item = User.query.get(theid)
     if not item:
         return jsonify({'message': 'Item not found'}), 404
 
+
     return jsonify({'item': item.serialize()}), 200
-
-
 
 @api.route('/users/favorites', methods=['POST'])
 @jwt_required()
@@ -165,14 +161,13 @@ def add_favorite():
 
     db.session.add(favorite)
     db.session.commit()
-
-    return jsonify({'message': 'Favorite added successfully'}), 200
+    favorites = Favorites.query.filter_by(user_id = user_id).first()
+    return jsonify({'message': 'Favorite added successfully', 'favorites':favorites.serialize()}), 200
 
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorite(id):
     current_user_id = get_jwt_identity()
-
     favorite = Favorites.query.get(id)
 
     if not favorite:
@@ -183,7 +178,6 @@ def delete_favorite(id):
 
     return jsonify({'message': 'Favorite deleted successfully'}), 200
 
-
 @api.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
@@ -193,6 +187,3 @@ def logout():
 
 if __name__ == "__main__":
     api.run()
-
-
-
