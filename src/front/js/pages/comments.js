@@ -8,6 +8,7 @@ export const Comments =({ actions, commentData }) => {
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
+    console.log(event.target.value,"HANDLECOMMENTCHANGE")
   };
 
   const handleCommentSubmit = async (event) => {

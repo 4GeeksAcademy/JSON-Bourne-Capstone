@@ -14,12 +14,14 @@ export const Login = () => {
 
   // LOGIN !!
   const handleClick = async (e) => {
+    console.log("text")
     e.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
     const loginSuccess = await actions.login(username, password);
     console.log("Login success:", loginSuccess);
   };
+
 
   useEffect(() => {
     if (store.token && store.token !== "" && store.token !== undefined) {
@@ -29,6 +31,7 @@ export const Login = () => {
 
   const handleSignUpPage = () => {
     history("/signup");
+    actions.signup(username, password);
   };
 
   return (
@@ -36,14 +39,17 @@ export const Login = () => {
      <div className="text-center mt-5">
       <h1>AIγορα</h1>
         <div>
+
           <div className="m-5">
-          <input
-            //className="d-flex alignInput"
-            type="text"
-            placeholder="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          /></div>
+              <input
+                //className="d-flex alignInput"
+                type="text"
+                placeholder="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+          </div>
+
           <div className="m-5">
           <input
             //className="d-flex alignInput"
@@ -58,12 +64,13 @@ export const Login = () => {
           <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             Login
           </button>
-          <button className="m-3 btn btn-warning" id="signup" onClick={handleSignUpPage}>
+          <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
+
               Sign Up
           </button>
           </div>
+          </div>
         </div>
       </div>
-    </div>
   );
 };

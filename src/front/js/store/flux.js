@@ -6,6 +6,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: [],
       posts: [
         "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/640px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+        "https://picsum.photos/id/237/200/300",
+       "https://picsum.photos/seed/picsum/200/300",
+       "https://picsum.photos/200/300?grayscale"
       ],
     },
     actions: {
