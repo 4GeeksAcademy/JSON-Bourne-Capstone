@@ -15,24 +15,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({token: token});
 			},
 		
-		
-			//LOGOUT
-
-	  store: {
-		token: null,
-		message: null,
-		favorites: [],
-		posts: ["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/640px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg"]
-	  },
-	  actions: {
-		// Use getActions to call a function within a function
-		syncTokenFromSessionStorage: () => {
-		  const token = sessionStorage.getItem("token");
-		  console.log("SYNCING SESSION TOKEN: " + token);
-		  if (token && token !== "" && token !== undefined) {
-			setStore({ token: token });
-		  }
-		},
 		// LOGOUT
 
 		signout: () => {
@@ -42,9 +24,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 
-		//LOGIN 
+		//LOGIN !!
 		login: async (username, password) => {
-
 			try {
 				const opts = {
 					method: "POST",
@@ -56,38 +37,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					process.env.BACKEND_URL + "api/login",
-					opts, 
-					
+					`${process.env.BACKEND_URL}api/login`,
+					opts
 				);
-				
-				
-
-				console.log('Request URL:', resp)
 				if (resp.status !==200) {
 					console.log('THERE WAS A RESPONSE STATUS ERROR');
 					return false;
 				}
 
 				const data = await resp.json();
-				console.log ("TOKEN HERE", data);
+				console.log ("TOKEN BACK HERE", data);
 				sessionStorage.setItem("token", data.access_token);
 				setStore({token: data.access_token});
 				return true;
 			}	catch (error) {
-				console.error("THERE WAS A CATCH ERROR LOADING FROM BACK END HERE!!", error);
-
+				console.error("THERE WAS A CATCH ERROR LOADING FROM BK END HERE!!", error);
 			}
-  
-			const data = await resp.json();
-			console.log("TOKEN HERE", data);
-			sessionStorage.setItem("token", data.access_token);
-			setStore({ token: data.access_token });
-			return true;
-		  }, catch (error) {
-			console.error("THERE WAS A CATCH ERROR LOADING FROM BACK END HERE!!", error);
-		  }
 		},
+
 		
 		// SIGN UP
 		signup: async (username, password) => {
@@ -103,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  };
 		  
 			  const resp = await fetch(
-				`${process.env.BACKEND_URL}/api/signup`,
+				`${process.env.BACKEND_URL}api/signup`,
 				opts
 			  );
 		  
