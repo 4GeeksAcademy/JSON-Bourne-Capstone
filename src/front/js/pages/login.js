@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import { useNavigate } from "react-router-dom";
+import "../../img/logo.png";
+
+
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -39,7 +42,7 @@ export const Login = () => {
   return (
     <div className="body">
      <div className="text-center mt-5">
-      <h1>AIγορα</h1>
+     <img src="logo.png"></img><h1>AIγορα</h1>
         <div>
          
           <div className="m-5">
@@ -71,7 +74,9 @@ export const Login = () => {
           </button>
           </div>
         </div>
-      
+      <div className="Text">
+        <p>μηδείς ἀγεωμέτρητος εἰσίτω μου τὴν στέγην</p>
+      </div>
       </div>
     
     </div>
