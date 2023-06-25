@@ -39,17 +39,18 @@ export const Login = () => {
      <div className="text-center mt-5">
       <h1>AIγορα</h1>
         <div>
+         
           <div className="m-5">
           <input
-            //className="d-flex alignInput"
             type="text"
             placeholder="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          /></div>
+          /> 
+          </div>
+          
           <div className="m-5">
           <input
-            //className="d-flex alignInput"
             type="password"
             placeholder="password"
             value={password}
@@ -60,13 +61,17 @@ export const Login = () => {
           <div className="d-flex justify-content-center allign-items-center">
           <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             Login
-          </button>
-
-              Sign Up
+          </button>         
+                                 {/* Signup button needs a new onclick button to handle registration */}
+                                                    
+          <button className="m-3 btn btn-warning" id="login" onClick={handleSignUpPage}>    
+            Sign Up
           </button>
           </div>
         </div>
+      
       </div>
+    
     </div>
   );
 };

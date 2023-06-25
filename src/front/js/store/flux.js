@@ -84,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			sessionStorage.setItem("token", data.access_token);
 			setStore({ token: data.access_token });
 			return true;
-		  } catch (error) {
+		  }, catch (error) {
 			console.error("THERE WAS A CATCH ERROR LOADING FROM BACK END HERE!!", error);
 		  }
 		},

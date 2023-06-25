@@ -26,10 +26,10 @@ export const Navbar = () => {
     }
   }, [store.token, location.pathname, navigate]);
 
-  if (location.pathname === "/") {
-    // Render nothing when on the login screen
-    return null;
-  }
+  // if (location.pathname === "/") {
+  //   // Render nothing when on the login screen
+  //   return null;
+  // }
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
