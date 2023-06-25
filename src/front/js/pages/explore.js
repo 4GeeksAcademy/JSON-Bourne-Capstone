@@ -3,9 +3,22 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/explore.css";
 
-export const Explore = () => {
-  const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
+
+const Explore = () => {
+    const {store, actions} = useContext(Context)
+    console.log(store.posts, "POST");
+    return (
+        <div className="entirePage">
+            {store.posts.map((item, index)=> {
+                return (
+                    <div className="eachCard">
+                        <img src={item}></img>
+                        </div>
+                )
+            })}
+        </div>
+    )
+}
 
   useEffect(() => {
     // Redirect to login page if user is not logged in
