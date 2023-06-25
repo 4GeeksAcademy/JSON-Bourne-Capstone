@@ -14,12 +14,14 @@ export const Login = () => {
 
   // LOGIN !!
   const handleClick = async (e) => {
+    console.log("text")
     e.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
     const loginSuccess = await actions.login(username, password);
     console.log("Login success:", loginSuccess);
   };
+
 
   useEffect(() => {
     if (store.token && store.token !== "" && store.token !== undefined) {
@@ -29,6 +31,7 @@ export const Login = () => {
 
   const handleSignUpPage = () => {
     history("/signup");
+    actions.signup(username, password);
   };
 
   return (
@@ -58,7 +61,7 @@ export const Login = () => {
           <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             Login
           </button>
-          <button className="m-3 btn btn-warning" id="signup" onClick={handleSignUpPage}>
+
               Sign Up
           </button>
           </div>

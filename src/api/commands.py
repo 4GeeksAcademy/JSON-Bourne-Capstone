@@ -30,3 +30,19 @@ def setup_commands(app):
         print("All test users created")
 
         ### Insert the code to populate others tables if needed
+
+    #       @app.cli.command("populate-post-table")
+    # def generate_post_list():
+    #     post_list = [
+    #         {
+    #             "title": "Under the Sea",
+    #             "post": "https://cdn.openart.ai/uploads/image_3PwgYnh5_1687539381066_512.webp"
+    #         }
+    #     ]
+    #     for post in post_list:
+    #         new_post = Post(
+    #             title = post['title'],
+    #             post = post["post"]
+    #         )
+    #         db.session.add(new_post)
+    #         db.session.commit()
