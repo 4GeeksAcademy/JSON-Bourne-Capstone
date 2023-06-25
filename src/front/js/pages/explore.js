@@ -11,12 +11,16 @@ export const Explore = () => {
     // Redirect to login page if user is not logged in
     if (!store.token) {
       navigate("/");
+    } else {
+      // Fetch the greeting message
+      actions.getMessage();
     }
-  }, [store.token, navigate]);
+  }, [store.token, navigate, actions]);
 
-  console.log(store.posts);
   return (
     <div className="entirePage">
+      <p>Hello {store.username}!</p> {/* Display the username */}
+      {store.message && <p>{store.message}</p>}
       {store.posts.map((item, index) => {
         return (
           <div className="eachCard" key={index}>

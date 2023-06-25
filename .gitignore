@@ -82,3 +82,6 @@ database.db
 diagram.png
 __pycache__/
 src/front/js/layout.js
+
+# ignore package-lock.json
+package-lock.json
