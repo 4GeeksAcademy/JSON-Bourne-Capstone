@@ -1,5 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
+
 		store: {
 			token: null,
 			message: null,
@@ -16,11 +17,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 		
 		
 			//LOGOUT
-		signout: () => {
-			sessionStorage.removeItem("token");
-			console.log('SIGNING OUT');
-			setStore({token: null});
+
+	  store: {
+		token: null,
+		message: null,
+		favorites: [],
+		posts: ["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/640px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg"]
+	  },
+	  actions: {
+		// Use getActions to call a function within a function
+		syncTokenFromSessionStorage: () => {
+		  const token = sessionStorage.getItem("token");
+		  console.log("SYNCING SESSION TOKEN: " + token);
+		  if (token && token !== "" && token !== undefined) {
+			setStore({ token: token });
+		  }
 		},
+		// LOGOUT
+
+		signout: () => {
+		  sessionStorage.removeItem("token");
+		  console.log("SIGNING OUT");
+		  setStore({ token: null });
+		},
+
 
 		//LOGIN 
 		login: async (username, password) => {
@@ -56,7 +76,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return true;
 			}	catch (error) {
 				console.error("THERE WAS A CATCH ERROR LOADING FROM BACK END HERE!!", error);
+
 			}
+  
+			const data = await resp.json();
+			console.log("TOKEN HERE", data);
+			sessionStorage.setItem("token", data.access_token);
+			setStore({ token: data.access_token });
+			return true;
+		  } catch (error) {
+			console.error("THERE WAS A CATCH ERROR LOADING FROM BACK END HERE!!", error);
+		  }
 		},
 		
 		// SIGN UP
@@ -206,3 +236,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			export default getState;
 			
+

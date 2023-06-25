@@ -1,7 +1,9 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
+
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -12,14 +14,25 @@ class User(db.Model):
     favorites = db.relationship('Favorites', backref='user')
     comments = db.relationship('Comment', backref='user')
 
+
+    def serialize (self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'post-id': self.post_id
+            }
+
+
     def __repr__(self):
         return f'<User {self.username}>'
+
 
     def to_dict(self):
         return {
             "user_id": self.id,
             "username": self.username
         }
+
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -30,6 +43,15 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     favorites = db.relationship('Favorites', backref='post')
     comments = db.relationship('Comment', backref='post')
+
+
+    def serialize (self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'post-id': self.post_id
+            }
+
 
     def to_dict(self):
         return {
@@ -42,11 +64,23 @@ class Post(db.Model):
 
 
 
+
+
+
 class Favorites(db.Model):
     __tablename__ = 'favorites'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+
+    def serialize (self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'post-id': self.post_id
+        }
+
 
 class Comment(db.Model):
     __tablename__ = 'comment'
@@ -56,8 +90,10 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
+
     def __repr__(self):
         return f'<Comment {self.text}>'
+
 
     def serialize(self):
         return {
