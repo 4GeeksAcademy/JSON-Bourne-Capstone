@@ -18,9 +18,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		// LOGOUT
 
 		signout: () => {
-		  sessionStorage.removeItem("token");
-		  console.log("SIGNING OUT");
-		  setStore({ token: null });
+			sessionStorage.removeItem("token");
+			console.log("SIGNING OUT");
+			setStore({ token: null });
+			window.location.href = "/";
 		},
 
 
@@ -37,7 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					`${process.env.BACKEND_URL}api/login`,
+					`https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/login`,
 					opts
 				);
 				if (resp.status !==200) {
@@ -46,9 +47,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				const data = await resp.json();
-				console.log ("TOKEN BACK HERE", data);
-				sessionStorage.setItem("token", data.access_token);
-				setStore({token: data.access_token});
+					console.log("Response data:", data); // Log the response data
+
+					sessionStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token, username: data.username });
 				return true;
 			}	catch (error) {
 				console.error("THERE WAS A CATCH ERROR LOADING FROM BK END HERE!!", error);
@@ -70,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  };
 		  
 			  const resp = await fetch(
-				`${process.env.BACKEND_URL}api/signup`,
+				`https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/signup`,
 				opts
 			  );
 		  
@@ -111,7 +113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         post_id: post_id,
 		created_at: created_at}
     const resp = await fetch(
-      `${process.env.BACKEND_URL}/api/comments`,
+      `https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/comments`,
       {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -150,13 +152,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const opts = {
 					headers: {
-						Authorization: `Beare ${store.token}`,
+						Authorization: `Bearer ${store.token}`,
 					},
 				};
 
 				try {
 					const resp = await fetch(
-						`${process.env.BACKEND_URL}/api/hello`,
+						`https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/hello`,
 						opts
 					);
 
@@ -181,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// EXPLORE
 				explore:()=>{
-					fetch('/api/single')
+					fetch('https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/single')
 					.then(response => response.json())
 					.then(posts => {
 						const gridContainer = document.getElementById('grid-container');

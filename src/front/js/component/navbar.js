@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-
-import { Link, useNavigate, useLocation } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -26,10 +24,10 @@ export const Navbar = () => {
     }
   }, [store.token, location.pathname, navigate]);
 
-  // if (location.pathname === "/") {
-  //   // Render nothing when on the login screen
-  //   return null;
-  // }
+  if (location.pathname === "/") {
+    // Render nothing when on the login screen
+    return null;
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
