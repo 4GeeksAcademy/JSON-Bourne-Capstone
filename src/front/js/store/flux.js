@@ -38,7 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					`https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/login`,
+					`‘${process.env.BACKEND_URL}api/login`,
 					opts
 				);
 				if (resp.status !==200) {
@@ -72,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  };
 		  
 			  const resp = await fetch(
-				`https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/signup`,
+				`${process.env.BACKEND_URL}api/signup`,
 				opts
 			  );
 		  
@@ -113,7 +113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         post_id: post_id,
 		created_at: created_at}
     const resp = await fetch(
-      `https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/comments`,
+      `${process.env.BACKEND_URL}api/‘comments`,
       {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -158,7 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 					const resp = await fetch(
-						`https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/hello`,
+						`‘${process.env.BACKEND_URL}api/hello`,
 						opts
 					);
 
