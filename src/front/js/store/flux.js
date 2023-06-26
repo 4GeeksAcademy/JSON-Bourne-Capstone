@@ -38,7 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				const resp = await fetch (
-					`‘${process.env.BACKEND_URL}api/login`,
+					`${process.env.BACKEND_URL}api/login`,
 					opts
 				);
 				if (resp.status !==200) {
@@ -158,7 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 					const resp = await fetch(
-						`‘${process.env.BACKEND_URL}api/hello`,
+						‘${process.env.BACKEND_URL}api/hello`,
 						opts
 					);
 
@@ -183,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// EXPLORE
 				explore:()=>{
-					fetch('https://brennybaker-refactored-space-dollop-v4j6qprjwww3w5x4-3001.preview.app.github.dev/api/single')
+					fetch('${process.env.BACKEND_URL}api/single')
 					.then(response => response.json())
 					.then(posts => {
 						const gridContainer = document.getElementById('grid-container');
