@@ -5,7 +5,7 @@ import { BackendURL } from "./component/backendURL";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { SignUp } from "./pages/signup"
-import { Explore } from "./pages/explore";
+import Explore  from "./pages/explore";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login } from "./pages/login";

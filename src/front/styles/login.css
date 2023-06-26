@@ -2,7 +2,6 @@ body {
     background-color: black;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: orange;
-
 }
 
 
@@ -10,4 +9,17 @@ body {
 input{
     background-color: orange;
     color: black
+}
+
+.Text {
+    margin-top: 500px;
+    font-size: 100%;
+}
+
+h1 {
+    font-size: 500%;
+}
+
+img{
+    border-bottom: 25%;
 }
