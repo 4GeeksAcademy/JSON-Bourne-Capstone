@@ -14,7 +14,7 @@ const Explore = () => {
         return (
           <div className="eachCard" key={index}>
             <h1>Some title</h1>
-            <Link to={`/single/${item.id}`}>
+            <Link to={`/single/${index}`}>
               <img src={item} alt={`Image ${index}`} />
             </Link>
           </div>

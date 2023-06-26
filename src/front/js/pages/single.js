@@ -13,17 +13,21 @@ export const Single = () => {
 
   const postId = params.id; // Accessing the post ID from the URL
 
+
   const commentData = {
-    post_id: postId // Using the post ID obtained from the URL
+    post_id: postId, userId: store.user // Using the post ID obtained from the URL
   };
 
-  const handleClick = () => {
-    navigate("/");
-  };
+console.log(commentData, "IAM COMMENT DATA USER")
+
+  // const handleClick = () => {
+  //   navigate("/");
+  // };
 
   // Retrieve the single post based on the post ID
-  const post = store.posts.find((item) => item.includes(postId));
+  const post = store.posts[postId]
 
+  console.log(store.user, 'IAMTHEUSER')
 
   if (!post) {
     return <h3>Loading...</h3>; // Add a loading state until the post is fetched
@@ -36,7 +40,7 @@ export const Single = () => {
           <div className="col-lg-6">
             <img src={post} alt={`Image ${postId}`} />
           </div>
-          <div className="col-lg-6" onClick={handleClick}>
+          <div className="col-lg-6">
             <Comments actions={actions} commentData={commentData} />
           </div>
         </div>

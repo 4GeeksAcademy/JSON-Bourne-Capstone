@@ -11,6 +11,7 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     actions.signout();
+    navigate('/')
   };
 
   const handleHomeClick = () => {

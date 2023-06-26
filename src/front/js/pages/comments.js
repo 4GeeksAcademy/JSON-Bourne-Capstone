@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Comments = ({ actions, commentData, posts }) => {
-  const { user_id, post_id } = commentData;
+const Comments = ({ actions, commentData}) => {
+  const { userId, post_id } = commentData;
   const [showComments, setShowComments] = useState(true);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
@@ -15,7 +15,7 @@ const Comments = ({ actions, commentData, posts }) => {
     event.preventDefault();
     try {
       const created_at = new Date();
-      const success = await actions.comments(comment, created_at, user_id, post_id);
+      const success = await actions.comments(comment, created_at, userId, post_id);
       if (success) {
         setComments([...comments, comment]);
         setComment('');
@@ -36,9 +36,9 @@ const Comments = ({ actions, commentData, posts }) => {
       {filteredComments.map((comment, index) => (
         <p key={index}>{comment}</p>
       ))}
-      <form onSubmit={handleCommentSubmit}>
-        <input type="text" value={comment} onChange={handleCommentChange} />
-        <button type="submit">Add Comment</button>
+      <form className="d-flex" onSubmit={handleCommentSubmit}>
+        <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} />
+        <button className="btn btn-primary" type="submit">Add Comment</button>
       </form>
     </div>
   );

@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+      user : null,
       token: null,
       message: null,
       favorites: [],
@@ -54,7 +55,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await resp.json();
           console.log("TOKEN HERE", data);
           sessionStorage.setItem("token", data.access_token);
-          setStore({ token: data.access_token });
+          console.log(data, "IAMDATA")
+          setStore({ token: data.access_token, user: data.user_id });
           return true;
         } catch (error) {
           console.error(
