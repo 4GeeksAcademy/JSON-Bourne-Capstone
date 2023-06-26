@@ -51,6 +51,8 @@ def login():
     return jsonify(access_token=access_token)
 
 
+
+
 @api.route('/comments', methods=['POST'])
 def comments():
     data = request.get_json()
@@ -123,6 +125,26 @@ def create_post():
     db.session.commit()
 
     return jsonify({'message': 'Post created successfully', 'post_id': post.id}), 200
+
+
+
+@api.route("/post-images", methods=["POST"])
+def create_post_image():
+    image = request.files['file']
+    post_id = request.form.get("post_id")
+    response = uploader.upload(
+        image,
+        resource_type="image",
+        folder="posts"
+    )
+    new_post_image = Image(
+        post_id=post_id,
+        url=response["secure_url"],
+    )
+    db.session.add(new_post_image)
+    db.session.commit()
+
+    return jsonify(new_post_image.serialize()), 201
 
 
 @api.route('/single/<int:theid>', methods=['GET'])

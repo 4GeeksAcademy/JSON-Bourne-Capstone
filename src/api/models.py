@@ -31,7 +31,6 @@ class User(db.Model):
             "username": self.username
         }
 
-
 class Post(db.Model):
     __tablename__ = 'post'
     id = db.Column(db.Integer, primary_key=True)
@@ -41,6 +40,7 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     favorites = db.relationship('Favorites', backref='post')
     comments = db.relationship('Comment', backref='post')
+    images = db.relationship('Image', backref='post')
 
     def serialize (self):
         return {
@@ -49,17 +49,25 @@ class Post(db.Model):
             'content': self.content,
             'created_at': self.created_at,
             'author_id': self.author_id,
-            'favorites': [favorite.serialize() for favorite in self.favorites],  # Serialize related favorites
-            'comments': [comment.serialize() for comment in self.comments]  
-            }
+            'favorites': [favorite.serialize() for favorite in self.favorites], 
+            'comments': [comment.serialize() for comment in self.comments],  
+            'images': [image.serialize() for image in self.images]  
+        }
+    
 
-    def to_dict(self):
+    
+    
+class Image(db.Model):
+    __tablename__ = 'image'
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(100), nullable=False)
+    Post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    
+    def serialize (self):
         return {
             'id': self.id,
-            'title': self.title,
-            'content': self.content,
-            'created_at': self.created_at,
-            'author_id': self.author_id,
+            'url': self.url,
+            'post-id': self.post_id
         }
 
 
