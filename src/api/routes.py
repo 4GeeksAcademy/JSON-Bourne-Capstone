@@ -93,7 +93,7 @@ def get_user_(id):
 
     return jsonify(user.serialize()), 200
 
-@app.route('/api/posts', methods=['GET'])
+@api.route('/posts', methods=['GET'])
 def get_posts():
     posts = Post.query.all()
     return jsonify([post.to_dict() for post in posts])
@@ -184,6 +184,18 @@ def logout():
     # Remove the stored access token from the session
     session.pop('access_token', None)
     return jsonify({'message': 'Logged out successfully'}), 200
+
+@api.route('/hello', methods=['GET'])
+@jwt_required()
+def hello():
+    # Retrieve the username from the token
+    username = get_jwt_identity()
+
+    # Create the message with the username
+    message = f"Hello, {username}"
+
+    # Return the message as JSON response
+    return jsonify({'message': message}), 200
 
 if __name__ == "__main__":
     api.run()

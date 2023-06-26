@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 export const Comments =({ actions, commentData }) => {
-  const { user_id, post_id } = commentData;
   const [showComments, setShowComments] = useState(true);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
