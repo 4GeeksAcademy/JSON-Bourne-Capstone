@@ -37,8 +37,8 @@ const Comments = ({ actions, commentData}) => {
         <p key={index}>{comment}</p>
       ))}
       <form className="d-flex" onSubmit={handleCommentSubmit}>
-        <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} />
-        <button className="btn btn-primary" type="submit">Add Comment</button>
+        <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} style={{ width: '300px', height: '300px' }} />
+        <button className="btn btn-primary" type="submit"  style={{ width: '150px', height: '50px' }}>Add Comment</button>
       </form>
     </div>
   );
