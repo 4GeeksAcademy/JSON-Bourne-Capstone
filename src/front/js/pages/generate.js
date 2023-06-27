@@ -8,7 +8,7 @@ const Generate = () => {
 
   const generate = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3001/generate_image', {
+    const response = await fetch('https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/generate_image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

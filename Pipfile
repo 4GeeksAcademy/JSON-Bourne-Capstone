@@ -21,6 +21,8 @@ typing-extensions = "*"
 flask-jwt-extended = "*"
 werkzeug = "*"
 flask-session = "*"
+openai = "*"
+flask-reuploaded = "*"
 
 [requires]
 python_version = "3.10"

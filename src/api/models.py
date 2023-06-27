@@ -80,14 +80,14 @@ class Favorites(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'post-id': self.post_id
+            'post_id': self.post_id
         }
 
     def serialize (self):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'post-id': self.post_id
+            'post_id': self.post_id
         }
     def to_dict(self):
         return{

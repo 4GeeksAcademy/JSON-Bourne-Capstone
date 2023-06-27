@@ -6,13 +6,13 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
+from api.routes import api
 from api.utils import APIException, generate_sitemap
 from api.models import db
-from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
-
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")
@@ -20,6 +20,9 @@ static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Replace with your own secret key
+app.config['UPLOADED_PHOTOS_DEST'] = '/workspaces/JSON-Bourne-Capstone/src/photos'
+photos = UploadSet('photos', IMAGES)
+uploader = configure_uploads(app, photos)
 jwt = JWTManager(app)
 
 # database condiguration

@@ -1,4 +1,4 @@
-const express = require('exoress');
+const express = require('express');
 const { generateImage } = require('../fileController');
 const router = express.Router();
 
