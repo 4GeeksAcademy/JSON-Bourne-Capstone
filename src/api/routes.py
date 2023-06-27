@@ -3,12 +3,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites, Comment
+from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
-import sys 
+import sys
+import openai
+import os
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
-
 
 @api.route('/signup', methods=['POST'])
 def signup():
@@ -29,12 +31,11 @@ def signup():
     except Exception as e:
         db.session.rollback()
         print(sys.exc_info())
-        return jsonify(message='Failed to register user'), 500 
+        return jsonify(message='Failed to register user'), 500
 
     user_id = new_user.id
 
     return jsonify(message='User registered successfully', user_id=user_id), 201
-
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -50,13 +51,35 @@ def login():
 
     # Generate access token
     access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token, user_id=user.id)
+
+
+@app.route('/generate_image', methods=['POST'])
+def generate_image():
+    data = request.get_json()
+    prompt = data.get('prompt')
+    number = data.get('number', 3)
+    size = data.get('size', 512)
+
+    output = openai.Image.create(
+        prompt=prompt,
+        n=int(number),
+        size=f'{size}x{size}',
+        response_format="b64_json"
+    )
+
+    base64_images = []
+    for i in range(0, len(output['data'])):
+        b64 = output['data'][i]['b64_json']
+        base64_images.append(b64)
+
+    return jsonify(base64_images)
 
 
 @api.route('/comments', methods=['POST'])
 def comments():
     data = request.get_json()
-    print("I AM DATA",data)
+    print("I AM DATA COMMENTS",data)
     text = data.get('text')
     user_id = data.get('user_id')
     post_id = data.get('post_id')
@@ -72,12 +95,12 @@ def comments():
 
     return jsonify(new_comment.serialize()), 200
 
+
 @api.route('/comments', methods=['GET'])
 def get_comments():
     comment_list= Comment.query.all()
     all_comments= list(map(lambda comment:comment.serialize(),comment_list))
     return jsonify(all_comments), 200
-
 
 @api.route('/users/<int:id>', methods=['GET'])
 @jwt_required()
@@ -95,13 +118,10 @@ def get_user_(id):
 
     return jsonify(user.serialize()), 200
 
-
-
-@app.route('/api/posts', methods=['GET'])
+@api.route('/posts', methods=['GET'])
 def get_posts():
     posts = Post.query.all()
     return jsonify([post.to_dict() for post in posts])
-
 
 @api.route('/posts', methods=['POST'])
 @jwt_required()
@@ -112,15 +132,16 @@ def create_post():
 
     user = User.query.filter_by(id=user_id).first()
 
+
     if not user:
         return jsonify({'message': 'User not found'}), 404
+
 
     post = Post(
         title=data['title'],
         content=data['content'],
         author=user,
         post_id=post_id
-
     )
 
     db.session.add(post)
@@ -128,15 +149,35 @@ def create_post():
 
     return jsonify({'message': 'Post created successfully', 'post_id': post.id}), 200
 
+
+
+@api.route("/post-images", methods=["POST"])
+def create_post_image():
+    image = request.files['file']
+    post_id = request.form.get("post_id")
+    response = uploader.upload(
+        image,
+        resource_type="image",
+        folder="posts"
+    )
+    new_post_image = Image(
+        post_id=post_id,
+        url=response["secure_url"],
+    )
+    db.session.add(new_post_image)
+    db.session.commit()
+
+    return jsonify(new_post_image.serialize()), 201
+
+
 @api.route('/single/<int:theid>', methods=['GET'])
 def get_single(theid):
     item = User.query.get(theid)
     if not item:
         return jsonify({'message': 'Item not found'}), 404
 
+
     return jsonify({'item': item.serialize()}), 200
-
-
 
 @api.route('/users/favorites', methods=['POST'])
 @jwt_required()
@@ -165,14 +206,15 @@ def add_favorite():
 
     db.session.add(favorite)
     db.session.commit()
-    favorites = Favorites.query.filter_by(user_id = user_id)
+
+    favorites = Favorites.query.filter_by(user_id = user_id).first()
+
     return jsonify({'message': 'Favorite added successfully', 'favorites':favorites.serialize()}), 200
 
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorite(id):
     current_user_id = get_jwt_identity()
-
     favorite = Favorites.query.get(id)
 
     if not favorite:
@@ -183,7 +225,6 @@ def delete_favorite(id):
 
     return jsonify({'message': 'Favorite deleted successfully'}), 200
 
-
 @api.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
@@ -191,5 +232,19 @@ def logout():
     session.pop('access_token', None)
     return jsonify({'message': 'Logged out successfully'}), 200
 
+
+@api.route('/hello', methods=['GET'])
+@jwt_required()
+def hello():
+    # Retrieve the username from the token
+    username = get_jwt_identity()
+
+    # Create the message with the username
+    message = f"Hello, {username}"
+
+    # Return the message as JSON response
+    return jsonify({'message': message}), 200
+
 if __name__ == "__main__":
     api.run()
+

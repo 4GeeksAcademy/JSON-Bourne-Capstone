@@ -5,6 +5,7 @@
 }
 .eachCard {
     width: 500px;
+    gap: 10px;
 }
 
 .eachCard img {

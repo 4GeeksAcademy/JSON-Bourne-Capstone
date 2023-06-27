@@ -3,11 +3,12 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/explore.css";
 
-export const Explore = () => {
+const Explore = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
+
     // Favorites
     const [activeFav, setActiveFav] = useState()
     const handleFavClick = (e) => {
@@ -21,28 +22,37 @@ export const Explore = () => {
       }
     }
     // Redirect to login page if user is not logged in
+
     if (!store.token) {
       navigate("/");
+    } else {
+      actions.getMessage();
     }
-  }, [store.token, navigate]);
+  }, [store.token]);
 
-  console.log(store.posts);
   return (
     <div className="entirePage">
-      {store.posts.map((item, index) => {
-        return (
-          <div className="eachCard" key={index}>
-            <h1>Some title</h1>
-            <Link to={`/single/${item.id}`}>
-              <img src={item.image} alt={`Image ${index}`} />
-            </Link>
-            {/* Favorites */}
-            <button 
-            onClick={(e)=>handleFavClick(e)} 
-            className={activeFav ? "fas fa-heart":"far fa-heart"}></button>
-          </div>
+
+         <Link to="/generate">
+            <button> Generate </button>
+          </Link>
+          {store.posts.map((item, index) => (
+          {store.message && <div className="message">{store.message}</div>}
+            <div key={index} className="eachCard">
+              <h1>Some title</h1>
+              <Link to={`/single/${index}`}>
+              <img src={item} alt={`Image ${index}`} />
+              </Link>
+              {/* Favorites */}
+              <button 
+              onClick={(e)=>handleFavClick(e)} 
+              className={activeFav ? "fas fa-heart":"far fa-heart"}></button>
+       </div>
         );
       })}
+
     </div>
-  );
-};
+);
+      }
+
+export default Explore;
