@@ -30,10 +30,10 @@ export const Single = (props) => {
     <div className="text-center mt-5">
       <div className="container">
         <div className="row">
-          <div className="col-lg-6">
+          <div className="col-lg-6" style={{ margin: '5px' }}>
             <img src={post} alt={`Image ${postId}`} />
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6" style={{ margin: '20px' }}>
             <Comments actions={actions} commentData={commentData} />
           </div>
         </div>
