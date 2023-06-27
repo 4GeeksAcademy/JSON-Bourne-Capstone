@@ -40,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
   
-			const resp = await fetch(`${process.env.BACKEND_URL}api/login`, opts);
+			const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/login`, opts);
 			if (resp.status !== 200) {
 			  console.log("THERE WAS A RESPONSE STATUS ERROR");
 			  return false;
@@ -71,7 +71,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
   
-			const resp = await fetch(`${process.env.BACKEND_URL}api/signup`, opts);
+			const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/signup`, opts);
   
 			if (resp.status === 201 || resp.status === 200) {
 			  console.log("User registered successfully");
@@ -112,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				created_at: created_at,
 			  };
 	
-			  const resp = await fetch(`${process.env.BACKEND_URL}/api/comments`, {
+			  const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/comments`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(dataObj),
@@ -139,10 +139,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		  },
     // FAVORITES
-			addFavorites: (user_id, post_id) => {
+			addFavorites: (store, user_id, post_id, token) => {
 				const payload = {
 					user_id: user_id,
-					post_id: post_id
+					post_id: post_id,
+					token: token
 				}
 				const opts = {
 					method: "POST",
@@ -153,10 +154,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(payload)
 				};
 
-				fetch(`${process.env.BACKEND_URL}/api/users/favorites`, opts)
+				fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/users/favorites`, opts)
 				.then(response => response.json())
 				.then(data => {
-					setStore({ favorites: data.favorites })
+					setStore({ favorites: data.favorites });
 					console.log(data)
 				})
 				.catch(error => console.log(error))
@@ -179,7 +180,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  };
   
 		  try {
-			const resp = await fetch(`${process.env.BACKEND_URL}api/hello`, opts);
+			const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/hello`, opts);
   
 			if (resp.status === 401) {
 			  console.log("Unauthorized: Token is invalid or expired");
@@ -198,8 +199,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
   
 		// EXPLORE
-		explore: () => {
-		  fetch(`${process.env.BACKEND_URL}api/single`)
+		explore: (index) => {
+		  fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/single/${index}`)
 			.then(response => response.json())
 			.then(posts => {
 			  const gridContainer = document.getElementById("grid-container");

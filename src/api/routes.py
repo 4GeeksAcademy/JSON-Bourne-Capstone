@@ -7,10 +7,12 @@ from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import sys
 import openai
-import os
+from .models import Image
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
+
+
 
 @api.route('/signup', methods=['POST'])
 def signup():
@@ -54,7 +56,7 @@ def login():
     return jsonify(access_token=access_token, user_id=user.id)
 
 
-@app.route('/generate_image', methods=['POST'])
+@api.route('/generate_image', methods=['POST'])
 def generate_image():
     data = request.get_json()
     prompt = data.get('prompt')
@@ -151,7 +153,7 @@ def create_post():
 
 
 
-@api.route("/post-images", methods=["POST"])
+@api.route("/post_images", methods=["POST"])
 def create_post_image():
     image = request.files['file']
     post_id = request.form.get("post_id")
@@ -183,8 +185,10 @@ def get_single(theid):
 @jwt_required()
 def add_favorite():
     data = request.get_json()
-    user_id = data.get('user_id')
+    print(data)
 
+    user_id = data.get('user_id')
+    print (user_id)
     # Check if user_id is provided and is an integer
     if not user_id or not isinstance(user_id, int):
         return jsonify({'message': 'Invalid user ID'}), 400
@@ -197,19 +201,23 @@ def add_favorite():
     post_id = data.get('post_id')
 
     if not post_id or not isinstance(post_id, int):
+        
         return jsonify({'message': 'Invalid post ID'}), 400
-
+        
     favorite = Favorites(
         user_id=user_id,
         post_id=post_id,
     )
-
+    
     db.session.add(favorite)
     db.session.commit()
 
-    favorites = Favorites.query.filter_by(user_id = user_id).first()
+    favorites = Favorites.query.filter_by(user_id=user_id).all()  # Use .all() to get all favorites
 
-    return jsonify({'message': 'Favorite added successfully', 'favorites':favorites.serialize()}), 200
+    # Serialize the list of favorites
+    favorites_data = [favorite.serialize() for favorite in favorites]
+
+    return jsonify({'message': 'Favorite added successfully', 'favorites': favorites_data}), 200
 
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
