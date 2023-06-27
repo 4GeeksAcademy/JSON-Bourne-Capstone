@@ -138,8 +138,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  );
 			}
 		  },
-  
-		// get message
+    // FAVORITES
+			addFavorites: (user_id, post_id) => {
+				const payload = {
+					user_id: user_id,
+					post_id: post_id
+				}
+				const opts = {
+					method: "POST",
+					headers: {
+						Authorization: `Bearer ${store.token}`,
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(payload)
+				};
+
+				fetch(`${process.env.BACKEND_URL}/api/users/favorites`, opts)
+				.then(response => response.json())
+				.then(data => {
+					setStore({ favorites: data.favorites })
+					console.log(data)
+				})
+				.catch(error => console.log(error))
+
+			},
+		// GET MESSAGE
 		getMessage: async () => {
 		  const store = getStore();
   
@@ -197,4 +220,5 @@ const getState = ({ getStore, getActions, setStore }) => {
   };
   
   export default getState;
+
 

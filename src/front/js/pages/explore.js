@@ -8,6 +8,21 @@ const Explore = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    // Favorites
+    const [activeFav, setActiveFav] = useState()
+    const handleFavClick = (e) => {
+      e.preventDefault()
+      if (activeFav === true){
+        // actions.removeFavorites(user_id, post_id)
+        setActiveFav (false) 
+      } else {
+        actions.addFavorites(user_id, post_id) 
+        setActiveFav (true) 
+      }
+    }
+    // Redirect to login page if user is not logged in
+
     if (!store.token) {
       navigate("/");
     } else {
@@ -17,18 +32,25 @@ const Explore = () => {
 
   return (
     <div className="entirePage">
-      <Link to="/generate">
-        <button> Generate </button>
-      </Link>
-      {store.message && <div className="message">{store.message}</div>}
-      {store.posts.map((item, index) => (
-        <div key={index} className="eachCard">
-          <h1>Some title</h1>
-          <Link to={`/single/${index}`}>
-          <img src={item} alt={`Image ${index}`} />
+
+         <Link to="/generate">
+            <button> Generate </button>
           </Link>
-        </div>
-      ))}
+          {store.posts.map((item, index) => (
+          {store.message && <div className="message">{store.message}</div>}
+            <div key={index} className="eachCard">
+              <h1>Some title</h1>
+              <Link to={`/single/${index}`}>
+              <img src={item} alt={`Image ${index}`} />
+              </Link>
+              {/* Favorites */}
+              <button 
+              onClick={(e)=>handleFavClick(e)} 
+              className={activeFav ? "fas fa-heart":"far fa-heart"}></button>
+       </div>
+        );
+      })}
+
     </div>
 );
       }
