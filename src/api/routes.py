@@ -48,7 +48,7 @@ def login():
 
     # Generate access token
     access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token, user_id=user.id)
 
 
 
@@ -56,7 +56,7 @@ def login():
 @api.route('/comments', methods=['POST'])
 def comments():
     data = request.get_json()
-    print("I AM DATA",data)
+    print("I AM DATA COMMENTS",data)
     text = data.get('text')
     user_id = data.get('user_id')
     post_id = data.get('post_id')

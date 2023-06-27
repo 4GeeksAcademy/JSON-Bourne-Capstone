@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 	  store: {
+		user : null,
 		token: null,
 		message: null,
 		posts: [
@@ -49,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			console.log("Response data:", data); // Log the response data
   
 			sessionStorage.setItem("token", data.access_token);
-			setStore({ token: data.access_token, username: data.username });
+			setStore({ token: data.access_token, user: data.user_id });
 			return true;
 		  } catch (error) {
 			console.error("THERE WAS A CATCH ERROR LOADING FROM BK END HERE!!", error);
@@ -90,37 +91,53 @@ const getState = ({ getStore, getActions, setStore }) => {
   
 		// COMMENTS
 		comments: async (text, created_at, user_id, post_id) => {
-		  try {
-			const dataObj = {
-			  text: text,
-			  user_id: user_id,
-			  post_id: post_id,
-			  created_at: created_at
-			};
-  
-			const resp = await fetch(`${process.env.BACKEND_URL}api/comments`, {
-			  method: "POST",
-			  headers: { "Content-Type": "application/json" },
-			  body: JSON.stringify(dataObj)
-			});
-  
-			console.log('Response status:', resp.status);
-  
-			if (resp.status !== 200) {
-			  console.log('There was a response status error');
-			  return false;
+			try {
+			  const opts = {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+				  text: text,
+				  created_at: created_at,
+				  user_id: user_id,
+				  post_id: post_id,
+				}),
+			  };
+	
+			  console.log("POST request options:", opts);
+	
+			  let dataObj = {
+				text: text,
+				user_id: user_id,
+				post_id: post_id,
+				created_at: created_at,
+			  };
+	
+			  const resp = await fetch(`${process.env.BACKEND_URL}/api/comments`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(dataObj),
+			  });
+	
+			  console.log("Response status:", resp.status);
+	
+			  if (resp.status !== 200) {
+				console.log("There was a response status error");
+				return false;
+			  }
+	
+			  const data = await resp.json();
+			  console.log("Response data:", data);
+	
+			  sessionStorage.setItem("token", data.access_token);
+			  setStore({ token: data.access_token });
+			  return true;
+			} catch (error) {
+			  console.error(
+				"There was a catch error loading from the backend:",
+				error
+			  );
 			}
-  
-			const data = await resp.json();
-			console.log("Response data:", data);
-  
-			sessionStorage.setItem("token", data.access_token);
-			setStore({ token: data.access_token });
-			return true;
-		  } catch (error) {
-			console.error("There was a catch error loading from the backend:", error);
-		  }
-		},
+		  },
   
 		// get message
 		getMessage: async () => {
