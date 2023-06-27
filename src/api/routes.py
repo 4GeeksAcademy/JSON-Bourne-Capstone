@@ -165,8 +165,8 @@ def add_favorite():
 
     db.session.add(favorite)
     db.session.commit()
-
-    return jsonify({'message': 'Favorite added successfully'}), 200
+    favorites = Favorites.query.filter_by(user_id = user_id)
+    return jsonify({'message': 'Favorite added successfully', 'favorites':favorites.serialize()}), 200
 
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
@@ -193,6 +193,3 @@ def logout():
 
 if __name__ == "__main__":
     api.run()
-
-
-
