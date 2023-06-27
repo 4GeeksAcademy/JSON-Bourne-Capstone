@@ -3,8 +3,11 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites, Comment
+from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import sys
+import openai
+import os
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
@@ -51,6 +54,26 @@ def login():
     return jsonify(access_token=access_token, user_id=user.id)
 
 
+@app.route('/generate_image', methods=['POST'])
+def generate_image():
+    data = request.get_json()
+    prompt = data.get('prompt')
+    number = data.get('number', 3)
+    size = data.get('size', 512)
+
+    output = openai.Image.create(
+        prompt=prompt,
+        n=int(number),
+        size=f'{size}x{size}',
+        response_format="b64_json"
+    )
+
+    base64_images = []
+    for i in range(0, len(output['data'])):
+        b64 = output['data'][i]['b64_json']
+        base64_images.append(b64)
+
+    return jsonify(base64_images)
 
 
 @api.route('/comments', methods=['POST'])

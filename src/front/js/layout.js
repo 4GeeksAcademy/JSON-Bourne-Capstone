@@ -6,6 +6,7 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { SignUp } from "./pages/signup"
 import Explore  from "./pages/explore";
+import Generate from "./pages/generate"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login } from "./pages/login";
@@ -28,6 +29,7 @@ const Layout = () => {
                         <Route element={<SignUp />} path="signup" />
                         <Route element={<Explore />} path="/explore" />
                         <Route element={<Single />} path="/single/:id" />
+                        <Route element={<Generate />} path="/generate" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

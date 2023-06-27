@@ -38,7 +38,7 @@ export const Single = (props) => {
           </div>
         </div>
       </div>
-      <h1>SINGLE VIEW</h1>
+      <p>Single</p>
     </div>
   );
 };
