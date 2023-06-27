@@ -1,10 +1,10 @@
-// generate.js
 import React, { useState } from 'react';
 import "../../styles/generate.css"
 
 const Generate = () => {
   const [prompt, setPrompt] = useState('');
   const [size, setSize] = useState('');
+  const [images, setImages] = useState([]);
 
   const generate = async (e) => {
     e.preventDefault();
@@ -18,15 +18,10 @@ const Generate = () => {
         size,
       }),
     });
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'images.zip');
-    document.body.appendChild(link);
-    link.click();
+    const data = await response.json(); 
+    setImages(data);
   };
-  
+
   return (
     <div className="OpenAIbody">
       <h5>"Τα μεγάλα αποτελέσματα απαιτούν μεγάλες φιλοδοξίες" - Ηράκλειτος </h5>
@@ -54,6 +49,9 @@ const Generate = () => {
         </div>
         <button type="submit" className="btn btn-warning">Generate</button>
       </form>
+      {images.map((image, index) => (
+        <img key={index} src={`data:image/png;base64,${image}`} alt="Generated" />
+      ))}
     </div>
   );
 };
