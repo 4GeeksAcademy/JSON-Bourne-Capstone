@@ -21,8 +21,8 @@ const Explore = () => {
       {store.posts.map((item, index) => (
         <div key={index} className="eachCard">
           <h1>Some title</h1>
-          <Link to={`/single/${item.id}`}>
-            <img src={item} alt="Post" />
+          <Link to={`/single/${index}`}>
+          <img src={item} alt={`Image ${index}`} />
           </Link>
         </div>
       ))}
