@@ -43,15 +43,15 @@ export const Navbar = () => {
           {location.pathname !== "/signup" && !store.token ? (
             <>
               <Link to="/explore">
-                <button className="btn btn-primary">Explore</button>
+                <button className="m-3 btn btn-warning">Explore</button>
               </Link>
               <Link to="/single">
-                <button className="btn btn-secondary">Single</button>
+                <button className="m-3 btn btn-warning">Single</button>
               </Link>
             </>
           ) : (
             store.token && (
-              <button className="btn btn-primary" onClick={handleLogout}>
+              <button className="m-3 btn btn-warning" onClick={handleLogout}>
                 Logout
               </button>
             )

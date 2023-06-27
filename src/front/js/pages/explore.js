@@ -17,6 +17,9 @@ const Explore = () => {
 
   return (
     <div className="entirePage">
+      <Link to="/generate">
+        <button> Generate </button>
+      </Link>
       {store.message && <div className="message">{store.message}</div>}
       {store.posts.map((item, index) => (
         <div key={index} className="eachCard">
@@ -27,7 +30,7 @@ const Explore = () => {
         </div>
       ))}
     </div>
-  );
-};
+);
+      }
 
 export default Explore;

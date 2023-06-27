@@ -5,41 +5,29 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const awsAccessKey = process.env.AWS_ACCESS_KEY
-const awsSecretKey = process.env.AWS_SECRET_KEY
-const awsBucketName = process.env.AWS_BUCKET_NAME
-
-const s3 = new S3Client ({
-    credentials: {
-        accessKeyId: awsAccessKey,
-        secretAccessKey: awsSecretKey,
-    }
-});
-
 const express = require('express');
 const app = express();
-
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage})
 
+const { generateImage } = require('./fileController'); // Adjust the path as necessary
+const bodyParser = require('body-parser');
 
-app.post('/api/posts', upload.single('image'), async(req, res) => {
-    console.log("req.body", req.body)
-    console.log("req.file", req.file)
-    
-    req.file.buffer
+app.use(bodyParser.json());
 
-    const params = {
-        Bucket: awsBucketName,
-        Key: req.file.originalname,
-        Body: req.file.buffer,
-    }
-    
-    const command = new PutObjectCommand(params)
-    await s3.send(command)
+app.post('/generateImage', async (req, res) => {
+  try {
+    const result = await generateImage(req, res);
+    res.json(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
-    res.send({})
-}
+app.listen(3001, () => {
+  console.log('Server is running on port 3001');
+});
+
 
 
 app.use('/files', fileRoutes),
