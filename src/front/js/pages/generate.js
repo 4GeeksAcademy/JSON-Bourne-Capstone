@@ -1,31 +1,24 @@
-import React, { useState } from 'react';
-import "../../styles/generate.css"
+import React, { useState, useContext } from 'react';
+import "../../styles/generate.css";
+import { Context } from "../store/appContext";
 
 const Generate = () => {
   const [prompt, setPrompt] = useState('');
   const [size, setSize] = useState('');
   const [images, setImages] = useState([]);
+  
+  const { actions } = useContext(Context); // Retrieve actions from context
 
-  const generate = async (e) => {
+  const handleGenerate = async (e) => {
     e.preventDefault();
-    const response = await fetch('https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/generate_image', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt,
-        size,
-      }),
-    });
-    const data = await response.json(); 
-    setImages(data);
+    const generatedImages = await actions.generate_image(prompt, 1, size, 'url');
+    setImages(generatedImages);
   };
 
   return (
     <div className="OpenAIbody">
       <h5>"Τα μεγάλα αποτελέσματα απαιτούν μεγάλες φιλοδοξίες" - Ηράκλειτος </h5>
-      <form id="image-form" onSubmit={generate}>
+      <form id="image-form" onSubmit={handleGenerate}>
         <div className="form-control">
           <input 
             type="text" 
@@ -49,8 +42,8 @@ const Generate = () => {
         </div>
         <button type="submit" className="btn btn-warning">Generate</button>
       </form>
-      {images.map((image, index) => (
-        <img key={index} src={`data:image/png;base64,${image}`} alt="Generated" />
+      {images && images.length > 0 && images.map((image, index) => (
+        <img key={index} src={image} alt="Generated" />
       ))}
     </div>
   );

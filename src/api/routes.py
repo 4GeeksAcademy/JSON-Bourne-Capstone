@@ -7,11 +7,13 @@ from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import sys
 import openai
+import os
 from .models import Image
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
-
+openai.api_key = ("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")
+openai.Model.list()
 
 
 @api.route('/signup', methods=['POST'])
@@ -56,27 +58,55 @@ def login():
     return jsonify(access_token=access_token, user_id=user.id)
 
 
+# @api.route('/generate_image', methods=['POST'])
+# def generate_image():
+#     data = request.get_json()
+#     prompt = data.get('prompt')
+#     number = data.get('number', 3)
+#     size = data.get('size', 512)
+
+#     output = openai.Image.create(
+#         prompt=prompt,
+#         n=int(number),
+#         size=f'{size}x{size}',
+#         response_format="b64_json"
+#     )
+
+#     base64_images = []
+#     for i in range(0, len(output['data'])):
+#         b64 = output['data'][i]['b64_json']
+#         base64_images.append(b64)
+
+#     return jsonify(base64_images)
+
 @api.route('/generate_image', methods=['POST'])
+#@jwt_required
 def generate_image():
     data = request.get_json()
     prompt = data.get('prompt')
-    number = data.get('number', 3)
-    size = data.get('size', 512)
+    number = data.get('number', 1)
+    size = data.get('size', '512x512')
+    response_format = data.get('response_format', 'url')  # Change response_format to 'url'
+    
+    try:
+        response = openai.Image.create(
+            prompt=prompt,
+            n=number,
+            size=size,
+            response_format=response_format
+        )
 
-    output = openai.Image.create(
-        prompt=prompt,
-        n=int(number),
-        size=f'{size}x{size}',
-        response_format="b64_json"
-    )
+        urls = []
+        if response_format == "url":
+            urls = [data['url'] for data in response.data]
 
-    base64_images = []
-    for i in range(0, len(output['data'])):
-        b64 = output['data'][i]['b64_json']
-        base64_images.append(b64)
+        response_headers = {
+            'Access-Control-Allow-Methods': 'POST'
+        }
 
-    return jsonify(base64_images)
-
+        return jsonify(urls), 200, response_headers
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
 @api.route('/comments', methods=['POST'])
 def comments():
@@ -157,23 +187,23 @@ def create_post():
 
 
 
-@api.route("/post_images", methods=["POST"])
-def create_post_image():
-    image = request.files['file']
-    post_id = request.form.get("post_id")
-    response = uploader.upload(
-        image,
-        resource_type="image",
-        folder="posts"
-    )
-    new_post_image = Image(
-        post_id=post_id,
-        url=response["secure_url"],
-    )
-    db.session.add(new_post_image)
-    db.session.commit()
+# @api.route("/post_images", methods=["POST"])
+# def create_post_image():
+#     image = request.files['file']
+#     post_id = request.form.get("post_id")
+#     response = uploader.upload(
+#         image,
+#         resource_type="image",
+#         folder="posts"
+#     )
+#     new_post_image = Image(
+#         post_id=post_id,
+#         url=response["secure_url"],
+#     )
+#     db.session.add(new_post_image)
+#     db.session.commit()
 
-    return jsonify(new_post_image.serialize()), 201
+#     return jsonify(new_post_image.serialize()), 201
 
 
 @api.route('/single/<int:theid>', methods=['GET'])
