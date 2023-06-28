@@ -4,6 +4,9 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import  Comments  from "./comments";
 
+
+
+
 export const Single = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
@@ -22,23 +25,22 @@ export const Single = (props) => {
 
   console.log(store.user, 'IAMTHEUSER')
  
-  // if (!post) {
-  //   return <h3>Loading...</h3>; // Add a loading state until the post is fetched
-  // }
+  if (!post) {
+    return <h3>Loading...</h3>; // Add a loading state until the post is fetched
+  }
 
   return (
     <div className="text-center mt-5">
       <div className="container">
         <div className="row">
-          <div className="col-lg-6" style={{ margin: '5px' }}>
+          <div className="col-lg-6" style={{ margin: '10%' }}>
             <img src={post} alt={`Image ${postId}`} />
           </div>
-          <div className="col-lg-6" style={{ margin: '20px' }}>
+          <div className="col-lg-6" style={{ margin: '1px' }}>
             <Comments actions={actions} commentData={commentData} />
           </div>
         </div>
       </div>
-      <p>Single</p>
     </div>
   );
 };

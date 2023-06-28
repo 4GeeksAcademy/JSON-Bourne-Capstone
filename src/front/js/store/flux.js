@@ -4,10 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		user : null,
 		token: null,
 		message: null,
-		posts: [
-		  "https://steamuserimages-a.akamaihd.net/ugc/29606766018333081/5FCC3DECF7BA68C0C053AC44C1166AA2D510D15C/",
-		  "https://e0.pxfuel.com/wallpapers/237/863/desktop-wallpaper-apotheon-hermes-platformer-resolution-games-and-background-hermes-logo.jpg",
-		  "https://i.ytimg.com/vi/_vg-jl6_L_U/maxresdefault.jpg"
+		posts: [ "src/front/img/Africa.jpg", "src/front/img/anime kid HD.jpg", "src/front/img/cittaVecchia.jpg", "src/front/img/Faro.jpg", "src/front/img/OVNI.jpeg", "src/front/img/degas.jpg", "src/front/img/unicorn.jpg", "src/front/img/unTigreDiaoulo.jpeg","src/front/img/Dali.jpg", "src/front/img/Rembrandt.jpg", "src/front/img/ZhouGuo.jpg", "animeProtag.jpeg",
 		]
 	  },
 	  actions: {
@@ -40,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
   
-			const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/login`, opts);
+			const resp = await fetch(`https://edgardmen-studious-parakeet-g9wqrwg6x7p299w6-3001.preview.app.github.dev/api/login`, opts);
 			if (resp.status !== 200) {
 			  console.log("THERE WAS A RESPONSE STATUS ERROR");
 			  return false;
@@ -71,7 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
   
-			const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/signup`, opts);
+			const resp = await fetch(`https://edgardmen-studious-parakeet-g9wqrwg6x7p299w6-3001.preview.app.github.dev/api/signup`, opts);
   
 			if (resp.status === 201 || resp.status === 200) {
 			  console.log("User registered successfully");
@@ -112,7 +109,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				created_at: created_at,
 			  };
 	
-			  const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/comments`, {
+			  const resp = await fetch(`https://edgardmen-studious-parakeet-g9wqrwg6x7p299w6-3001.preview.app.github.dev/api/comments`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(dataObj),
@@ -140,6 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  },
     // FAVORITES
 			addFavorites: (store, user_id, post_id, token) => {
+				console.log(token);
 				const payload = {
 					user_id: user_id,
 					post_id: post_id,
@@ -154,7 +152,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(payload)
 				};
 
-				fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/users/favorites`, opts)
+				fetch(`https://edgardmen-studious-parakeet-g9wqrwg6x7p299w6-3001.preview.app.github.dev/api/users/favorites`, opts)
 				.then(response => response.json())
 				.then(data => {
 					setStore({ favorites: data.favorites });
@@ -180,7 +178,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  };
   
 		  try {
-			const resp = await fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/hello`, opts);
+			const resp = await fetch(`https://edgardmen-studious-parakeet-g9wqrwg6x7p299w6-3001.preview.app.github.dev/api/hello`, opts);
   
 			if (resp.status === 401) {
 			  console.log("Unauthorized: Token is invalid or expired");
@@ -200,7 +198,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   
 		// EXPLORE
 		explore: (index) => {
-		  fetch(`https://brennybaker-special-broccoli-r954p765p99cxjxw-3001.preview.app.github.dev/api/single/${index}`)
+		  fetch(`https://edgardmen-studious-parakeet-g9wqrwg6x7p299w6-3001.preview.app.github.dev/api/single/${index}`)
 			.then(response => response.json())
 			.then(posts => {
 			  const gridContainer = document.getElementById("grid-container");

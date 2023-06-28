@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "../../styles/explore.css";
+import Card from "../component/card";
 
 const Explore = () => {
   const { store, actions } = useContext(Context);
@@ -15,7 +16,7 @@ const Explore = () => {
   };
 
   // Favorites
-  const [activeFav, setActiveFav] = useState();
+  const [activeFav, setActiveFav] = useState(false);
   const [message, setMessage] = useState(store.message); // Store the message in a separate state variable
 
   const handleFavClick = (e) => {
@@ -41,24 +42,12 @@ const Explore = () => {
 
   return (
     <div className="entirePage">
-      <Link to="/generate">
-        <button>Generate</button>
-      </Link>
+<Link to="/generate"> <button className="btn btn-warning">Generate</button></Link>
       {message && <div className="message">{message}</div>} {/* Display the message only once */}
       {store.posts.map((item, index) => (
-        <React.Fragment key={index}>
-          <div className="eachCard">
-            <h1>Some title</h1>
-            <Link to={`/single/${index}`}>
-              <img src={item} alt={`Image ${index}`} />
-            </Link>
-            {/* Favorites */}
-            <button
-              onClick={handleFavClick}
-              className={activeFav ? "fas fa-heart" : "far fa-heart"}
-            ></button>
-          </div>
-        </React.Fragment>
+        // <React.Fragment key={index}>
+      <Card index={index} item={item}></Card> 
+        // </React.Fragment>
       ))}
     </div>
   );

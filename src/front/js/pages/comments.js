@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 const Comments = ({ actions, commentData}) => {
   const { userId, post_id } = commentData;
   const [showComments, setShowComments] = useState(true);
@@ -32,13 +33,12 @@ const Comments = ({ actions, commentData}) => {
 
   return (
     <div>
-      <h3>Comment</h3>
       {filteredComments.map((comment, index) => (
         <p key={index}>{comment}</p>
       ))}
       <form className="d-flex" onSubmit={handleCommentSubmit}>
         <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} style={{ width: '300px', height: '300px' }} />
-        <button className="btn btn-primary" type="submit"  style={{ width: '150px', height: '50px' }}>Add Comment</button>
+        <button className="btn btn-warning" type="submit"  style={{ width: '150px', height: '50px' }}>Comment</button>
       </form>
     </div>
   );

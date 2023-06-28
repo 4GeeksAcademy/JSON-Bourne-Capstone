@@ -37,7 +37,7 @@ export const Navbar = () => {
           className="navbar-brand mb-0 h1"
           onClick={handleHomeClick}
         >
-          {store.token ? "Home" : "Login"}
+          {store.token ? "Explore" : "Login"}
         </Link>
         <div className="ml-auto">
           {location.pathname !== "/signup" && !store.token ? (

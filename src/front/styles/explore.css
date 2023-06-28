@@ -5,9 +5,14 @@
 }
 .eachCard {
     width: 500px;
-    gap: 10px;
+    margin: 1%;
 }
 
 .eachCard img {
     width: 100%;
+    border-radius: 5px;
+}
+
+button {
+    background-color: orange;   
 }

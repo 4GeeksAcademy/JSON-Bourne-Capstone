@@ -51,7 +51,7 @@ export const SignUp = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           autoComplete="password"
         />
-        <button className="m-3 btn btn-primary" type="submit">
+        <button className="m-3 btn btn-warning" type="submit">
           Sign Up
         </button>
       </div>

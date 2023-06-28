@@ -219,6 +219,8 @@ def add_favorite():
 
     return jsonify({'message': 'Favorite added successfully', 'favorites': favorites_data}), 200
 
+
+
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorite(id):
