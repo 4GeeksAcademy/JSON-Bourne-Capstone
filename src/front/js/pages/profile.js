@@ -7,6 +7,7 @@ const Profile = () => {
 const {store, actions} = useContext(Context)
     return (
 <div className="page">
+    <img src="https://i.redd.it/ohxlcovejd8b1.jpg"></img>
 <button className="btn btn-warning">Upload</button>
 {store.favorites && store.favorites.map((favorite, index) => {
     return (
