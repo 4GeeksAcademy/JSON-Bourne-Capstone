@@ -82,3 +82,7 @@ database.db
 diagram.png
 __pycache__/
 src/front/js/layout.js
+src/api/routes.py
+
+# Ignore config.py file
+config.py

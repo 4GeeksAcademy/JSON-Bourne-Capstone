@@ -9,10 +9,11 @@ import sys
 import openai
 import os
 from .models import Image
+from config import API_KEY
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
-openai.api_key = ("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")
+openai.api_key = (API_KEY) #stored securely in config.py which is in the gitignore list
 openai.Model.list()
 
 
@@ -57,27 +58,6 @@ def login():
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token, user_id=user.id)
 
-
-# @api.route('/generate_image', methods=['POST'])
-# def generate_image():
-#     data = request.get_json()
-#     prompt = data.get('prompt')
-#     number = data.get('number', 3)
-#     size = data.get('size', 512)
-
-#     output = openai.Image.create(
-#         prompt=prompt,
-#         n=int(number),
-#         size=f'{size}x{size}',
-#         response_format="b64_json"
-#     )
-
-#     base64_images = []
-#     for i in range(0, len(output['data'])):
-#         b64 = output['data'][i]['b64_json']
-#         base64_images.append(b64)
-
-#     return jsonify(base64_images)
 
 @api.route('/generate_image', methods=['POST'])
 #@jwt_required

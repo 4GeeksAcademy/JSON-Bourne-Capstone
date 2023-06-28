@@ -4,14 +4,13 @@ import { Context } from "../store/appContext";
 
 const Generate = () => {
   const [prompt, setPrompt] = useState('');
-  const [size, setSize] = useState('');
   const [images, setImages] = useState([]);
-  
+
   const { actions } = useContext(Context); // Retrieve actions from context
 
   const handleGenerate = async (e) => {
     e.preventDefault();
-    const generatedImages = await actions.generate_image(prompt, 1, size, 'url');
+    const generatedImages = await actions.generate_image(prompt, 1, '512x512', 'url');
     setImages(generatedImages);
   };
 
@@ -28,18 +27,6 @@ const Generate = () => {
             onChange={e => setPrompt(e.target.value)}
           />
         </div>
-        <div className="form-control">
-          <select 
-            name="size" 
-            id="size" 
-            value={size}
-            onChange={e => setSize(e.target.value)}
-          >
-            <option value="256x256">256x256</option>    
-            <option value="512x512">512x512</option>
-            <option value="1024x1024">1024x1024</option>
-          </select>
-        </div>
         <button type="submit" className="btn btn-warning">Generate</button>
       </form>
       {images && images.length > 0 && images.map((image, index) => (
@@ -49,4 +36,4 @@ const Generate = () => {
   );
 };
 
-export default Generate;
+export default Generate
