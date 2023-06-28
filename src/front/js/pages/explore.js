@@ -12,7 +12,6 @@ const Explore = () => {
 
   // Favorites
   const [activeFav, setActiveFav] = useState(false);
-  const [message, setMessage] = useState(store.message); // Store the message in a separate state variable
 
   const handleFavClick = (post, e) => {
     e.preventDefault();
@@ -61,7 +60,6 @@ const Explore = () => {
 
   return (
     <div className="entirePage">
-      {message && <div className="message">{message}</div>}
       {store.posts.map((post, index) => (
       <Card key={post.id} index={index} post={post} onFavClick={handleFavClick.bind(null, post)}></Card> 
       ))}

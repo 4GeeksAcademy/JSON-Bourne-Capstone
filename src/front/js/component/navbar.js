@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import '../../img/head.png'
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -60,7 +61,7 @@ export const Navbar = () => {
                 </Link>
                 <button className="m-3 btn btn-warning" onClick={handleLogout}>
                   Logout
-                </button>
+                </button> 
               </>
             )
           )}

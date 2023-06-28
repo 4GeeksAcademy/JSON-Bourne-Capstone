@@ -56,25 +56,33 @@ def login():
 
 
 @api.route('/generate_image', methods=['POST'])
+#@jwt_required
 def generate_image():
     data = request.get_json()
     prompt = data.get('prompt')
-    number = data.get('number', 3)
-    size = data.get('size', 512)
+    number = data.get('number', 1)
+    size = data.get('size', '512x512')
+    response_format = data.get('response_format', 'url')  # Change response_format to 'url'
+    
+    try:
+        response = openai.Image.create(
+            prompt=prompt,
+            n=number,
+            size=size,
+            response_format=response_format
+        )
 
-    output = openai.Image.create(
-        prompt=prompt,
-        n=int(number),
-        size=f'{size}x{size}',
-        response_format="b64_json"
-    )
+        urls = []
+        if response_format == "url":
+            urls = [data['url'] for data in response.data]
 
-    base64_images = []
-    for i in range(0, len(output['data'])):
-        b64 = output['data'][i]['b64_json']
-        base64_images.append(b64)
+        response_headers = {
+            'Access-Control-Allow-Methods': 'POST'
+        }
 
-    return jsonify(base64_images)
+        return jsonify(urls), 200, response_headers
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
 
 @api.route('/comments', methods=['POST'])

@@ -26,8 +26,6 @@ export const Single = (props) => {
     image_url: post.image_url
   };
 
- 
-
   return (
     <div className="text-center mt-5">
       <div className="container">
@@ -35,7 +33,7 @@ export const Single = (props) => {
           <div className="col-lg-6" style={{ margin: '10%' }}>
             <img src={post.image_url} alt={`Image ${postId}`} />
           </div>
-          <div className="col-lg-6" style={{ margin: '1px' }}>
+          <div className="col-lg-6" style={{ margin: '20px' }}>
             <Comments actions={actions} commentData={commentData} />
           </div>
         </div>

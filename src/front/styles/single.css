@@ -1,3 +1,8 @@
 img {
  border-radius: 5px;
 }
+
+button{
+    margin-right: -20%;
+    justify-content: center;
+}
