@@ -32,8 +32,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}),
 				};
 		
-				const response = await fetch("https://brennybaker-reimagined-bassoon-pv5jp7w5wxvc7rr4-3001.preview.app.github.dev/generate_image", opts);
+				const response = await fetch("https://brennybaker-solid-carnival-44pjwqvpr44f7w97-3001.preview.app.github.dev/api/generate_image", opts);
 				if (!response.ok) {
+					const errorResponse = await response.json();
+					console.log("Error response:", errorResponse)
 					throw new Error("Failed to generate image");
 				}
 		
@@ -64,7 +66,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
   
-			const resp = await fetch(`https://brennybaker-reimagined-bassoon-pv5jp7w5wxvc7rr4-3001.preview.app.github.dev/api/login`, opts);
+			const resp = await fetch(`https://brennybaker-solid-carnival-44pjwqvpr44f7w97-3001.preview.app.github.dev/api/login`, opts);
 			if (resp.status !== 200) {
 			  console.log("THERE WAS A RESPONSE STATUS ERROR");
 			  return false;
@@ -95,7 +97,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
   
-			const resp = await fetch(`https://brennybaker-reimagined-bassoon-pv5jp7w5wxvc7rr4-3001.preview.app.github.dev/api/signup`, opts);
+			const resp = await fetch(`https://brennybaker-solid-carnival-44pjwqvpr44f7w97-3001.preview.app.github.dev/api/signup`, opts);
   
 			if (resp.status === 201 || resp.status === 200) {
 			  console.log("User registered successfully");
@@ -136,7 +138,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				created_at: created_at,
 			  };
 	
-			  const resp = await fetch(`https://brennybaker-reimagined-bassoon-pv5jp7w5wxvc7rr4-3001.preview.app.github.dev/api/comments`, {
+			  const resp = await fetch(`https://brennybaker-solid-carnival-44pjwqvpr44f7w97-3001.preview.app.github.dev/api/comments`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(dataObj),
@@ -178,7 +180,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(payload)
 				};
 
-				fetch(`https://brennybaker-reimagined-bassoon-pv5jp7w5wxvc7rr4-3001.preview.app.github.dev/api/users/favorites`, opts)
+				fetch(`https://brennybaker-solid-carnival-44pjwqvpr44f7w97-3001.preview.app.github.dev/api/users/favorites`, opts)
 				.then(response => response.json())
 				.then(data => {
 					setStore({ favorites: data.favorites });
@@ -207,7 +209,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  };
   
 		  try {
-			const resp = await fetch(`https://brennybaker-reimagined-bassoon-pv5jp7w5wxvc7rr4-3001.preview.app.github.dev/api/hello`, opts);
+			const resp = await fetch(`https://brennybaker-solid-carnival-44pjwqvpr44f7w97-3001.preview.app.github.dev/api/hello`, opts);
   
 			if (resp.status === 401) {
 			  console.log("Unauthorized: Token is invalid or expired");
@@ -227,7 +229,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   
 		// EXPLORE
 		explore: (index) => {
-		  fetch(`https://brennybaker-reimagined-bassoon-pv5jp7w5wxvc7rr4-3001.preview.app.github.dev/api/single/${index}`)
+		  fetch(`https://brennybaker-solid-carnival-44pjwqvpr44f7w97-3001.preview.app.github.dev/api/single/${index}`)
 			.then(response => response.json())
 			.then(posts => {
 			  const gridContainer = document.getElementById("grid-container");
