@@ -13,7 +13,9 @@ export const Single = (props) => {
 
   const commentData = {
     post_id: postId, userId: store.user // Using the post ID obtained from the URL
+    
   };
+
 
   console.log(commentData, "IAM COMMENT DATA USER")
 
@@ -42,6 +44,7 @@ export const Single = (props) => {
     </div>
   );
 };
+
 
 Single.propTypes = {
   match: PropTypes.object,

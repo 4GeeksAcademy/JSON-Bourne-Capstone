@@ -123,7 +123,11 @@ def get_user_(id):
 @api.route('/posts', methods=['GET'])
 def get_posts():
     posts = Post.query.all()
-    return jsonify([post.to_dict() for post in posts])
+    serialized_posts=[]
+
+    for post in posts: 
+        serialized_posts.append(posts.serialize())
+    return jsonify(serialized_posts), 200
 
 @api.route('/posts', methods=['POST'])
 @jwt_required()

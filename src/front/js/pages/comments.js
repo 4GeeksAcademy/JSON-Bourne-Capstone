@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Context } from '/workspaces/JSON-Bourne-Capstone/src/front/js/store/appContext.js';
 
 const Comments = ({ actions, commentData}) => {
-  const { userId, post_id } = commentData;
+  const {store} = useContext(Context)
+  const { userId} = commentData;
+  const { post_id } = 0;
   const [showComments, setShowComments] = useState(true);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
@@ -37,7 +40,7 @@ const Comments = ({ actions, commentData}) => {
         <p key={index}>{comment}</p>
       ))}
       <form className="d-flex" onSubmit={handleCommentSubmit}>
-        <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} style={{ width: '300px', height: '300px' }} />
+        <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} style={{ width: '300px', height: '100px' }} />
         <button className="btn btn-primary" type="submit"  style={{ width: '150px', height: '50px' }}>Add Comment</button>
       </form>
     </div>
