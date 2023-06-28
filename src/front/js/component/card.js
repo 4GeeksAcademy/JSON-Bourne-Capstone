@@ -4,40 +4,27 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
-
-
-
-const Card = ({index, item}) => {
+const Card = ({index, post, onFavClick}) => {
     const { store, actions } = useContext(Context);
     const params = useParams();
-    const postId = params.id; // Accessing the post ID from the URL
+    const postId = params.id; 
 
   const FavoritesData = {
     post_id: postId,
-    user_id: store.user // Using the user ID from the store
+    user_id: store.user 
   };
-    const handleFavClick = (e) => {
-        e.preventDefault();
-        console.log(FavoritesData)
-        if (activeFav === true) {
-          // actions.removeFavorites(FavoritesData.user_id, FavoritesData.post_id)
-          setActiveFav(false);
-        } else {
-          actions.addFavorites(FavoritesData.user_id, FavoritesData.post_id); // Updated the arguments
-          setActiveFav(true);
-        }
-      };
-    
-    const [activeFav, setActiveFav] = useState(false);
+
+  
+  const [activeFav, setActiveFav] = useState(false);
     
     return <div>
     <div className="eachCard">
     <p> </p>
     <Link to={`/single/${index}`}>
-      <img src={item} alt={`Image ${index}`} />
+      <img src={post.image_url} alt={`Image ${index}`} /> {/* Change here */}
     </Link>
     <button
-      onClick={handleFavClick}
+      onClick={onFavClick}
       className={activeFav ? "fas fa-heart" : "far fa-heart"}
     ></button>
   </div>

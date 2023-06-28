@@ -66,16 +66,14 @@ export const Login = () => {
           <div className="d-flex justify-content-center allign-items-center">
           <button className="m-3 btn btn-warning" id="login" onClick={handleClick}>
             Login
-          </button>         
-                                 {/* Signup button needs a new onclick button to handle registration */}
-                                                    
+          </button>                                 
           <button className="m-3 btn btn-warning" id="login" onClick={handleSignUpPage}>    
             Sign Up
           </button>
           </div>
         </div>
       <div className="Text">
-        <p>μηδείς ἀγεωμέτρητος εἰσίτω μου τὴν στέγην</p>
+        <h5>μηδείς ἀγεωμέτρητος εἰσίτω μου τὴν στέγην</h5>
       </div>
       </div>
     

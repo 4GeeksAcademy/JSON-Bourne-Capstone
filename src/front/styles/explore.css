@@ -6,6 +6,7 @@
 .eachCard {
     width: 500px;
     margin: 1%;
+    width: 500px;
 }
 
 .eachCard img {
@@ -16,3 +17,4 @@
 button {
     background-color: orange;   
 }
+

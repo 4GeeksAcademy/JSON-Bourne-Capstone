@@ -28,7 +28,7 @@ const Comments = ({ actions, commentData}) => {
     }
   };
 
-  // Filter comments based on the current post being displayed
+  
   const filteredComments = comments.filter((c) => c.post_id === post_id);
 
   return (

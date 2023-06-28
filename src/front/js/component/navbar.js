@@ -51,9 +51,17 @@ export const Navbar = () => {
             </>
           ) : (
             store.token && (
-              <button className="m-3 btn btn-warning" onClick={handleLogout}>
-                Logout
-              </button>
+              <>
+                <Link to="/generate">
+                  <button className="m-3 btn btn-warning">Generate</button>
+                </Link>
+                <Link to="/profile">
+                  <button className="m-3 btn btn-warning">Profile</button>
+                </Link>
+                <button className="m-3 btn btn-warning" onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
             )
           )}
         </div>

@@ -10,6 +10,8 @@ import Generate from "./pages/generate"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login } from "./pages/login";
+import Profile from "./pages/profile";
+
 
 //create your first component
 const Layout = () => {
@@ -30,6 +32,7 @@ const Layout = () => {
                         <Route element={<Explore />} path="/explore" />
                         <Route element={<Single />} path="/single/:id" />
                         <Route element={<Generate />} path="/generate" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

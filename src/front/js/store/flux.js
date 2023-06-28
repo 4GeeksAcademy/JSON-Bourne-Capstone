@@ -4,8 +4,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 		user : null,
 		token: null,
 		message: null,
-		posts: [ "src/front/img/Africa.jpg", "src/front/img/anime kid HD.jpg", "src/front/img/cittaVecchia.jpg", "src/front/img/Faro.jpg", "src/front/img/OVNI.jpeg", "src/front/img/degas.jpg", "src/front/img/unicorn.jpg", "src/front/img/unTigreDiaoulo.jpeg","src/front/img/Dali.jpg", "src/front/img/Rembrandt.jpg", "src/front/img/ZhouGuo.jpg", "animeProtag.jpeg",
-		]
+		posts: [ 
+			{id: 0, image_url: "https://images.nightcafe.studio//assets/tdraw-girl.jpg?tr=w-1200,c-at_max", title: "thing"},
+			{id: 1, image_url: "https://preview.redd.it/o4egjbpsgm8b1.png?width=1456&format=png&auto=webp&v=enabled&s=c30f80a9ee898ae0a45ab6583eb06c76659f9aec", title: "shoe"},
+			{id: 2, image_url: "https://i.redd.it/ohxlcovejd8b1.jpg", title: "idk"}, 
+			{id: 3, image_url: "https://www.redsharknews.com/hubfs/Portrait_female_Midjourney.jpg", title: "woman"}, 
+			{id: 4, image_url: "https://i.pcmag.com/imagery/articles/03a3gbCKfH8dDJnjhHLuHDf-1..v1665523315.png", title: "idek"}, 
+			{id: 5, image_url: "https://preview.redd.it/uie9za2gjo7b1.png?width=1024&format=png&auto=webp&v=enabled&s=0ba5d8e71698e96edc0e13bbeb7384503f8b2202", title: "someone"}, 
+			{id: 6, image_url: "https://preview.redd.it/p7t9oyas6k7b1.png?width=640&crop=smart&auto=webp&v=enabled&s=de9445c05ced8f0328bce951266657e6564fb7fd", title: "something"}, 
+			{id: 7, image_url: "https://preview.redd.it/3u6yv3c8yr8b1.jpg?width=1024&format=pjpg&auto=webp&v=enabled&s=6a8ae18ed81ad0efc097af31068e785457dd903a", title: "yep"},
+			{id: 8, image_url: "https://preview.redd.it/mvwfdc7z9m8b1.jpg?width=960&crop=smart&auto=webp&v=enabled&s=306c4d5bc5ee041c1ec2f44de39a69b0477f1c12", title: "dress"},
+			{id: 9, image_url: "https://live.staticflickr.com/65535/52279110981_9f03201604_b.jpg", title: "land"},
+			{id: 10, image_url: "https://cdnb.artstation.com/p/assets/images/images/054/123/535/large/mistral-wechatworkscreenshot-d7536e91-d937-4cae-91cc-4647d4230add.jpg?1663803273", title: "china"}
+
+		],
+		favorites: []
 	  },
 	  actions: {
 		// Use getActions to call a function within a function
@@ -136,17 +149,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		  },
     // FAVORITES
-			addFavorites: (store, user_id, post_id, token) => {
+			addFavorites: (user_id, post_id) => {
 				console.log(token);
+				let token = getStore().token
 				const payload = {
 					user_id: user_id,
 					post_id: post_id,
+					// image_url,
 					token: token
 				}
 				const opts = {
 					method: "POST",
 					headers: {
-						Authorization: `Bearer ${store.token}`,
+						Authorization: `Bearer ${token}`,
 						"Content-Type": "application/json"
 					},
 					body: JSON.stringify(payload)
@@ -161,6 +176,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => console.log(error))
 
 			},
+			
 		// GET MESSAGE
 		getMessage: async () => {
 		  const store = getStore();
@@ -213,8 +229,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				gridContainer.appendChild(postDiv);
 			  });
 			});
-		}
-	  }
+
+		},
+	}
 	};
   };
   

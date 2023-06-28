@@ -17,9 +17,9 @@ class User(db.Model):
         return {
             'id': self.id,
             'username': self.username,
-            'posts': self.posts,
-            'favorites': self.favorites,
-            'comments': self.comments
+            'posts': [post.id for post in self.posts],
+            'favorites':  [favorite.serialize() for favorite in self.favorites],
+            'comments': [comment.id for comment in self.comments]
             }
 
     def __repr__(self):
@@ -49,13 +49,12 @@ class Post(db.Model):
             'content': self.content,
             'created_at': self.created_at,
             'author_id': self.author_id,
-            'favorites': [favorite.serialize() for favorite in self.favorites], 
-            'comments': [comment.serialize() for comment in self.comments],  
-            'images': [image.serialize() for image in self.images]  
+            'favorites': self.favorites, 
+            'comments': self.comments,  
+            'images': self.images  
         }
     
-    
-    
+     
 class Image(db.Model):
     __tablename__ = 'image'
     id = db.Column(db.Integer, primary_key=True)
@@ -66,7 +65,7 @@ class Image(db.Model):
         return {
             'id': self.id,
             'url': self.url,
-            'post-id': self.post_id
+            'post_id': self.post_id
         }
 
 
@@ -75,13 +74,14 @@ class Favorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-
+    image_url = db.Column(db.String(500))
 
     def serialize (self):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'post_id': self.post_id
+            'post_id': self.post_id,
+            'image_url': self.image_url
         }
 
 

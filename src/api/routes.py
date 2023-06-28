@@ -16,15 +16,14 @@ app = Flask(__name__)
 
 @api.route('/signup', methods=['POST'])
 def signup():
-    # Retrieve request data
+
     username = request.json.get('username')
     password = request.json.get('password')
 
-    # Check if the email is already registered
     if User.query.filter_by(username=username).first():
         return jsonify(message='Username already registered'), 409  
 
-    # Create a new user object
+  
     new_user = User(username=username, password=password)
 
     try:
@@ -51,7 +50,7 @@ def login():
         if user is None or not user.check_password(password):
             return jsonify({"msg": "Incorrect email or password"}), 401
 
-    # Generate access token
+
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token, user_id=user.id)
 
@@ -184,6 +183,7 @@ def get_single(theid):
 @api.route('/users/favorites', methods=['POST'])
 @jwt_required()
 def add_favorite():
+ 
     data = request.get_json()
     print(data)
 
@@ -203,10 +203,17 @@ def add_favorite():
     if not post_id or not isinstance(post_id, int):
         
         return jsonify({'message': 'Invalid post ID'}), 400
+    
+    # image_url = data.get('image_url')
+
+    # if not image_url or not isinstance(image_url, str):
+        
+    #     return jsonify({'message': 'Invalid image URL'}), 400 
         
     favorite = Favorites(
         user_id=user_id,
         post_id=post_id,
+        # image_url=image_url
     )
     
     db.session.add(favorite)
