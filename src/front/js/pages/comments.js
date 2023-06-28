@@ -4,7 +4,7 @@ import { Context } from '/workspaces/JSON-Bourne-Capstone/src/front/js/store/app
 const Comments = ({ actions, commentData}) => {
   const {store} = useContext(Context)
   const { userId} = commentData;
-  const { post_id } = 0;
+  const { post_id } = post_id;
   const [showComments, setShowComments] = useState(true);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
