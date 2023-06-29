@@ -19,7 +19,6 @@ const Card = ({index, post, onFavClick}) => {
     
     return <div>
     <div className="eachCard">
-    <p> </p>
     <Link to={`/single/${index}`}>
       <img src={post.image_url} alt={`Image ${index}`} /> {/* Change here */}
     </Link>

@@ -13,7 +13,7 @@ const Profile = () => {
             formData.append("post_id", "your_post_id_here"); // replace with actual post id
 
             try {
-                let response = await fetch("/post_images", {
+                let response = await fetch("http://your_backend_url/post_images", {
                     method: "POST",
                     body: formData
                 });

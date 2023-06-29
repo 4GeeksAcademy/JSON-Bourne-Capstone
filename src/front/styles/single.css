@@ -1,15 +1,21 @@
 
 button{
-    justify-content: center;
+    display: block;
+    margin: auto;
 }
 
 img {
-    justify-content: center;
+    display: block;
+    margin: auto;
     border-radius: 1%;
-    width: 800px;
-    height: 800px;
+    width: 1000px;
+    height: auto;
 }
 
 div {
     justify-content: center;
+}
+
+#block {
+    background-color: black;
 }

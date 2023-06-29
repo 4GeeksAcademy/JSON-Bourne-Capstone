@@ -27,18 +27,14 @@ export const Single = (props) => {
   };
 
   return (
-    <div className="text-center mt-5">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6" style={{ margin: '10%' }}>
-            <img src={post.image_url} alt={`Image ${postId}`} />
-          </div>
-          <div className="col-lg-6" style={{ margin: '20px' }}>
+    <div className="container mt-5">
+      <div className="card mb-3" id="block">
+          <img src={post.image_url} alt={'image $postId'} className="card-img-top mx-auto d-block" style={{ width: '800px' }} />
+          <div className="card-body">
             <Comments actions={actions} commentData={commentData} />
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

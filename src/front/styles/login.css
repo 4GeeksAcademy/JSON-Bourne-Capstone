@@ -5,7 +5,6 @@ body {
 }
 
 
-
 input{
     background-color: orange;
     color: black
@@ -13,7 +12,6 @@ input{
 
 .Text {
     margin-top: 500px;
-    font-size: 100%;
 }
 
 h1 {
@@ -21,5 +19,6 @@ h1 {
 }
 
 img{
-    border-bottom: 25%;
+    height:50px;
+    width: 50px;
 }

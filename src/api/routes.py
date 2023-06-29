@@ -12,7 +12,7 @@ from .models import Image
 api = Blueprint('api', __name__)
 app = Flask(__name__)
 CORS(api)
-
+openai.api_key = ("sk-SwZsQNrv0486vwUbpwknTBIbkFJffAe0rlu0QeF0lijC67QN")
 
 @api.route('/signup', methods=['POST'])
 def signup():

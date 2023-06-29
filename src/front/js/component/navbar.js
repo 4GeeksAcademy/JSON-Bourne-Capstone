@@ -7,7 +7,6 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const location = useLocation();
   const navigate = useNavigate();
-
   const handleLogout = () => {
     actions.signout();
   };
@@ -31,7 +30,7 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" style={{ justifyContent: "space-around"}}>
       <div className="container">
         <Link
           to="/"

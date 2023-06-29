@@ -42,9 +42,9 @@ export const Login = () => {
   return (
     <div className="body">
      <div className="text-center mt-5">
-     <img src="logo.png"></img><h1>AIγορα</h1>
+      <img src="logo.png"></img>
+    <h1>AIγορα</h1>
         <div>
-         
           <div className="m-5">
           <input
             type="text"
@@ -52,8 +52,7 @@ export const Login = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           /> 
-          </div>
-          
+          </div> 
           <div className="m-5">
           <input
             type="password"

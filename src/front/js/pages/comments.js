@@ -34,11 +34,19 @@ const Comments = ({ actions, commentData}) => {
   return (
     <div>
       {filteredComments.map((comment, index) => (
-        <p key={index}>{comment}</p>
+        <div key={index} className='mb-2'> 
+        <div className="card">
+          <div className='card-body'>
+            <p className='card-text'>{comment}</p>
+            </div>
+            </div>
+            </div>
       ))}
-      <form className="d-flex" onSubmit={handleCommentSubmit}>
-        <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} style={{ width: '300px', height: '100px' }} />
-        <button className="btn btn-warning" type="submit"  style={{ width: '150px', height: '50px' }}>Comment</button>
+      <form onSubmit={handleCommentSubmit}>
+        <div className='form-group'>
+        <textarea id='commentInput' className='form-control' type="text" value={comment} onChange={handleCommentChange}></textarea>
+        </div>
+        <button className="btn btn-warning" type="submit">Comment</button>
       </form>
     </div>
   );
