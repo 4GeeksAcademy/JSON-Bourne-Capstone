@@ -1,8 +1,15 @@
-img {
- border-radius: 5px;
-}
 
 button{
-    margin-right: -20%;
+    justify-content: center;
+}
+
+img {
+    justify-content: center;
+    border-radius: 1%;
+    width: 800px;
+    height: 800px;
+}
+
+div {
     justify-content: center;
 }

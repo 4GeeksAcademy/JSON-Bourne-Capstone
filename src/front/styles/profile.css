@@ -1,0 +1,14 @@
+.entirePage {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+img {
+    width: 380px;
+    height: 380px;
+}
+
+input {
+    justify-content: center;
+}

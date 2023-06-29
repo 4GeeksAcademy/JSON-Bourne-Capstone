@@ -42,6 +42,8 @@ export const Single = (props) => {
   );
 };
 
+
+
 Single.propTypes = {
   match: PropTypes.object,
 };

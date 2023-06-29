@@ -15,13 +15,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 			{id: 7, image_url: "https://preview.redd.it/3u6yv3c8yr8b1.jpg?width=1024&format=pjpg&auto=webp&v=enabled&s=6a8ae18ed81ad0efc097af31068e785457dd903a", title: "yep"},
 			{id: 8, image_url: "https://preview.redd.it/mvwfdc7z9m8b1.jpg?width=960&crop=smart&auto=webp&v=enabled&s=306c4d5bc5ee041c1ec2f44de39a69b0477f1c12", title: "dress"},
 			{id: 9, image_url: "https://live.staticflickr.com/65535/52279110981_9f03201604_b.jpg", title: "land"},
-			{id: 10, image_url: "https://cdnb.artstation.com/p/assets/images/images/054/123/535/large/mistral-wechatworkscreenshot-d7536e91-d937-4cae-91cc-4647d4230add.jpg?1663803273", title: "china"}
-
+			{id: 10, image_url: "https://cdnb.artstation.com/p/assets/images/images/054/123/535/large/mistral-wechatworkscreenshot-d7536e91-d937-4cae-91cc-4647d4230add.jpg?1663803273", title: "china"},
+			{id: 11, image_url: "https://preview.redd.it/p31c52c4lr3b1.png?width=1024&format=png&auto=webp&v=enabled&s=25c23b331b8bc8a2df74144165d92423e6313743"},
+			{id: 12, image_url: "https://preview.redd.it/n7d5u1anvk3b1.jpg?width=1024&format=pjpg&auto=webp&v=enabled&s=d6ef647420e295f71bb752dd814e57a6bccdee9d"},
+			{id: 13, image_url: "https://preview.redd.it/y2j9epld2p5b1.jpg?width=640&crop=smart&auto=webp&v=enabled&s=332c5ea8af2b3ee76f76d82634fe5a3cef89a537"},
+			{id:14, image_url: "https://preview.redd.it/h973ocxrrs6b1.jpg?width=960&crop=smart&auto=webp&v=enabled&s=b9610937c85844af0ecb7f0750f2792de76b1fef"},
+			{id:15, image_url: "https://preview.redd.it/t5w2x4kuh86b1.jpg?width=960&crop=smart&auto=webp&v=enabled&s=b30995991a38ba420e43bf00aa0fce45b45c3725"},
+			{id:16, image_url: "https://imgeng.jagran.com/images/2023/jun/hollywood%20celebrities1685881953412.jpg"},
+			{id: 17, image_url: "https://laughingsquid.com/wp-content/uploads/2022/08/Enter-Sandman-AI-Images.jpg"},
+			{id: 18, image_url: "https://www.protocol.com/media-library/yellow-and-blue-dragon-in-the-sky.png?id=31823462&width=1245&height=700&quality=85&coordinates=0%2C202%2C0%2C246"},
+			{id: 19, image_url: "https://images.squarespace-cdn.com/content/v1/5b549cf4b27e39707a5804a7/832e4f9f-2a5d-42eb-9f31-4e69c99dd75a/DALL%C2%B7E+2022-07-06+17.26.33+-+Homer+Simpson+is+mid-air+jumping+on+a+trampoline%2C+Professional+book+cover+design%2C+IMG_00299371.tiff.png?format=1000w"},
+			{id: 20, image_url: "https://s.yimg.com/ny/api/res/1.2/BBtgBuUnZ4yE_KK0mqtE6g--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04NzY-/https://s.yimg.com/os/creatr-uploaded-images/2022-04/cacc8fa0-b652-11ec-af75-438ac34a567d"},
+			{id: 21, image_url: "https://www.creativeshrimp.com/wp-content/uploads/2022/06/midjourney_aiart_gleb_alexandrov_16-1024x731.jpg"},
+			{id: 22, image_url: "https://prompthero.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxtT0dKa1pEUTFNeTFsTVRBekxUUmpPR010WVRGa01TMDFaR1V3WlRGaE9UZ3dZVEFHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--c2444fb788234372d53c042aea2e717ff1a72dc8/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDRG9MWm05eWJXRjBPZ2wzWldKd09oUnlaWE5wZW1WZmRHOWZiR2x0YVhSYkIya0NBQWd3T2dwellYWmxjbnNKT2hOemRXSnpZVzF3YkdWZmJXOWtaVWtpQjI5dUJqb0dSVlE2Q25OMGNtbHdWRG9PYVc1MFpYSnNZV05sVkRvTWNYVmhiR2wwZVdsZiIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--9e9280d525ba1fc2f95c971c0fbcb4a2ca8b55dd/prompthero-prompt-2fbba09f599.png"},
+			{id: 23, image_url: "https://www.betchashesews.com/wp-content/uploads/2022/06/andre-the-giant-in-the-style-of-daniel-clowes-midjourney-portrait.jpg"},
+			{id: 24, image_url: "https://wp.technologyreview.com/wp-content/uploads/2023/03/ai-chongqing-6.png"},
+			// {id: 26, image_url: ""},
+			// {id: 27, image_url: ""},
+			// {id: 28, image_url: ""},
+			// {id: 29, image_url: ""},
+			// {id: 30, image_url: ""},
+			// {id: 31, image_url: ""},
+			// {id: , image_url: ""},
+			// {id: , image_url: ""},
+			// {id: , image_url: ""},
+			// {id: , image_url: ""},
+			// {id: , image_url: ""},
+			// {id: , image_url: ""},
+			// {id: , image_url: ""}
 		],
 		favorites: []
 	  },
 	  actions: {
-		// Use getActions to call a function within a function
 		syncTokenFromSessionStorage: () => {
 		  const token = sessionStorage.getItem("token");
 		  console.log("SYNCING SESSION TOKEN" + token);
@@ -56,7 +81,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return images;
 			} catch (error) {
 				console.error("Error generating image:", error);
-				// Handle the error as needed
 			}
 		},
 		// LOGOUT
@@ -86,7 +110,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
   
 			const data = await resp.json();
-			console.log("Response data:", data); // Log the response data
+			console.log("Response data:", data); 
   
 			sessionStorage.setItem("token", data.access_token);
 			setStore({ token: data.access_token, user: data.user_id });

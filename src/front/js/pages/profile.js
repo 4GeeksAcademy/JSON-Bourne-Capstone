@@ -1,21 +1,45 @@
-import React from "react";
-import { useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useState } from 'react';
 import "../../styles/profile.css"
 
 const Profile = () => {
-const {store, actions} = useContext(Context)
-    return (
-<div className="page">
-    <img src="https://i.redd.it/ohxlcovejd8b1.jpg"></img>
-<button className="btn btn-warning">Upload</button>
-{store.favorites && store.favorites.map((favorite, index) => {
-    return (
-        <img key={index} src={favorite.image} alt={'Favorite ${index}'}></img>
-    )
-})
-}
-</div>
-)}
+    const [image, setImage] = useState(null);
 
-export default Profile
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setImage(URL.createObjectURL(file));
+            let formData = new FormData();
+            formData.append("file", file);
+            formData.append("post_id", "your_post_id_here"); // replace with actual post id
+
+            try {
+                let response = await fetch("/post_images", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                }
+
+                let jsonResponse = await response.json();
+
+                console.log(jsonResponse); // See the server response
+
+            } catch (error) {
+                console.log(error); // Log any error to the console
+            }
+        } else {
+            // Handle error case here. The file is not an image or no file was selected.
+        }
+    };
+
+    return (
+        <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+            <input type="file" onChange={handleFileChange} className="mb-3" />
+            {image && <img src={image} alt="Preview" />}
+        </div>
+    );
+};
+
+export default Profile;

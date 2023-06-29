@@ -25,7 +25,7 @@ const Card = ({index, post, onFavClick}) => {
     </Link>
     <button
       onClick={onFavClick}
-      className={activeFav ? "fas fa-heart" : "far fa-heart"}
+      className={'favorite-button ${isFavorite ? "fas fa-heart" : "far fa-heart"}'}
     ></button>
   </div>
   </div>

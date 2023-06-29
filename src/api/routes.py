@@ -11,7 +11,7 @@ from .models import Image
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
-
+CORS(api)
 
 
 @api.route('/signup', methods=['POST'])
@@ -177,6 +177,7 @@ def create_post_image():
     db.session.commit()
 
     return jsonify(new_post_image.serialize()), 201
+
 
 
 @api.route('/single/<int:theid>', methods=['GET'])
