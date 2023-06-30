@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "../../styles/explore.css";
 
-const Explore = () => {
+export const Explore = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const params = useParams();
@@ -11,7 +11,7 @@ const Explore = () => {
 
   const FavoritesData = {
     post_id: postId,
-    user_id: store.user // Using the user ID from the store
+    user_id: store.user, // Using the user ID from the store
   };
 
   // Favorites
@@ -20,7 +20,7 @@ const Explore = () => {
 
   const handleFavClick = (e) => {
     e.preventDefault();
-    console.log(FavoritesData)
+    console.log(FavoritesData);
     if (activeFav === true) {
       // actions.removeFavorites(FavoritesData.user_id, FavoritesData.post_id)
       setActiveFav(false);
@@ -44,7 +44,8 @@ const Explore = () => {
       <Link to="/generate">
         <button>Generate</button>
       </Link>
-      {message && <div className="message">{message}</div>} {/* Display the message only once */}
+      {message && <div className="message">{message}</div>}{" "}
+      {/* Display the message only once */}
       {store.posts.map((item, index) => (
         <React.Fragment key={index}>
           <div className="eachCard">
@@ -63,5 +64,3 @@ const Explore = () => {
     </div>
   );
 };
-
-export default Explore;

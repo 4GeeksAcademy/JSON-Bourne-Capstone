@@ -9,7 +9,15 @@ import sys
 import openai
 import os
 from .models import Image
-from config import API_KEY
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+
+# Now you can import the API_KEY variable
+from os import environ
+
+API_KEY = environ.get('API_KEY')
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)

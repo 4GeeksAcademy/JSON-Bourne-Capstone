@@ -1,32 +1,37 @@
-import React, { useContext, useState } from 'react';
-import { Context } from '/workspaces/JSON-Bourne-Capstone/src/front/js/store/appContext.js';
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
 
-const Comments = ({ actions, commentData}) => {
-  const {store} = useContext(Context)
-  const { userId} = commentData;
+const Comments = ({ actions, commentData }) => {
+  const { store } = useContext(Context);
+  const { userId } = commentData;
   const { post_id } = post_id;
   const [showComments, setShowComments] = useState(true);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
-    console.log(event.target.value, 'HANDLECOMMENTCHANGE');
+    console.log(event.target.value, "HANDLECOMMENTCHANGE");
   };
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
     try {
       const created_at = new Date();
-      const success = await actions.comments(comment, created_at, userId, post_id);
+      const success = await actions.comments(
+        comment,
+        created_at,
+        userId,
+        post_id
+      );
       if (success) {
         setComments([...comments, comment]);
-        setComment('');
+        setComment("");
       } else {
-        console.log('Comment creation failed');
+        console.log("Comment creation failed");
       }
     } catch (error) {
-      console.error('Error creating comment:', error);
+      console.error("Error creating comment:", error);
     }
   };
 
@@ -40,8 +45,20 @@ const Comments = ({ actions, commentData}) => {
         <p key={index}>{comment}</p>
       ))}
       <form className="d-flex" onSubmit={handleCommentSubmit}>
-        <textarea className="commentsTextArea" type="text" value={comment} onChange={(e)=>setComment(e.target.value)} style={{ width: '300px', height: '100px' }} />
-        <button className="btn btn-primary" type="submit"  style={{ width: '150px', height: '50px' }}>Add Comment</button>
+        <textarea
+          className="commentsTextArea"
+          type="text"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          style={{ width: "300px", height: "100px" }}
+        />
+        <button
+          className="btn btn-primary"
+          type="submit"
+          style={{ width: "150px", height: "50px" }}
+        >
+          Add Comment
+        </button>
       </form>
     </div>
   );
