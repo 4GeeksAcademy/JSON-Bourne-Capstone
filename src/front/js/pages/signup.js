@@ -1,60 +1,70 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/login.css";
 import { useNavigate } from "react-router-dom";
+import "../../styles/signup.css";
 
 export const SignUp = () => {
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const history = useNavigate();
 
-  const handleSignUp = async (e) => {
-    e.preventDefault(); // Prevents the default form submission behavior
-    if (password === confirmPassword) {
+  const handleSignUp = async () => {
+    if (password) {
       const success = await actions.signup(username, password);
       if (success) {
         history("/");
       }
-    } else if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      console.log("Passwords do not match");
     } else {
-      alert("Username/password Incorrect");
-      console.log("username/password Incorrect");
+      alert("Password is required");
+      console.log("Password is required");
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSignUp();
+  };
+
   return (
-    <form onSubmit={handleSignUp}>
-      <div>
-        <h2>Sign Up</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          autoComplete="username"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="password"
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          autoComplete="password"
-        />
-        <button className="m-3 btn btn-primary" type="submit">
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <form onSubmit={handleSubmit} className="signup-form">
+        <h2 className="mb-4">Sign Up</h2>
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control orange-bg"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="password"
+            className="form-control orange-bg"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="password"
+            className="form-control orange-bg"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
+          />
+        </div>
+        <button className="btn btn-warning" type="submit">
           Sign Up
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "/workspaces/JSON-Bourne-Capstone/src/front/js/store/appContext.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "../../styles/explore.css";
 
@@ -7,59 +7,37 @@ const Explore = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const params = useParams();
-  const postId = params.id; // Accessing the post ID from the URL
-
-  const FavoritesData = {
-    post_id: postId,
-    user_id: store.user // Using the user ID from the store
-  };
-
+  const postId = params.id;
+  const [isFav, setIsFav] = useState(false);
   // Favorites
-  const [activeFav, setActiveFav] = useState();
-  const [message, setMessage] = useState(store.message); // Store the message in a separate state variable
+  // const [activeFav, setActiveFav] = useState(false);
 
   const handleFavClick = (e) => {
     e.preventDefault();
-    console.log(FavoritesData)
-    if (activeFav === true) {
-      // actions.removeFavorites(FavoritesData.user_id, FavoritesData.post_id)
-      setActiveFav(false);
-    } else {
-      actions.addFavorites(FavoritesData.user_id, FavoritesData.post_id); // Updated the arguments
-      setActiveFav(true);
-    }
+    e.stopPropagation();
+    const heartIcon = e.target;
+    heartIcon.classList.toggle("active");
   };
-
-  useEffect(() => {
-    // Redirect to login page if user is not logged in
-    if (!store.token) {
-      navigate("/");
-    } else {
-      actions.getMessage();
-    }
-  }, [store.token]);
+/////////////////////////////////////////////////////////////////////////////////////////
+  // useEffect(() => {
+  //   actions.getMessage();
+  // }, []);
 
   return (
     <div className="entirePage">
-      <Link to="/generate">
-        <button>Generate</button>
-      </Link>
-      {message && <div className="message">{message}</div>} {/* Display the message only once */}
-      {store.posts.map((item, index) => (
-        <React.Fragment key={index}>
-          <div className="eachCard">
-            <h1>Some title</h1>
-            <Link to={`/single/${index}`}>
-              <img src={item} alt={`Image ${index}`} />
+      <div className="explore-container">
+        {store.posts.map((imageUrl, index) => (
+          <div className="explore-card" key={index}>
+            <Link key={index} to={`/single/${index}`} className="explore-card-link">
+              <img className="explore-card-image" src={imageUrl} alt={`Image ${index}`} />
+              <h2 className="explore-card-title">Image {index}</h2>
             </Link>
-            {/* Favorites */}
-            <button
-              onClick={handleFavClick}
-              className={activeFav ? "fas fa-heart" : "far fa-heart"}
-            ></button>
+            <button className="explore-fav-button" onClick={handleFavClick}>
+                  <span className="heart-icon">&#9825;</span>
+                  </button>
           </div>
-        </React.Fragment>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

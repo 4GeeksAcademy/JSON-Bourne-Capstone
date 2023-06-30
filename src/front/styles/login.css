@@ -21,5 +21,7 @@ h1 {
 }
 
 img{
+    width: 100px; /* Adjust the width as per your preference */
+    height: auto; /* Keeps the aspect ratio and scales the height proportionally */
     border-bottom: 25%;
 }

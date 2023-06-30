@@ -1,22 +1,45 @@
-
 .form-control {
-    width: 10%;
     display: flex;
     justify-content: center;
-    margin-left: 45%;
-}
-
-input {
-    background-color:white
-}
-
-
-h5{
-    margin-left: 34%;
-    margin-top: 2%;
-}
-
-button {
-    margin-left: 47.5%;
-    margin-top: 2%;
-}
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  input {
+    background-color: orange !important;
+    color: black;
+    width: 300px;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  h5 {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  .loading {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  .image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .image-container img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    margin: 10px;
+  }
