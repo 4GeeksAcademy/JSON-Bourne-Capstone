@@ -39,7 +39,7 @@ const Generate = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        generatedImage && <img src={generatedImage} alt="Generated" className="img-fluid mt-4" />
+        generatedImage && <img src={generatedImage} alt="Generated" className="img-fluid" />
       )}
     </div>
   );

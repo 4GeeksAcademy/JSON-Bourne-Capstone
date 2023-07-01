@@ -46,7 +46,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  method: "POST",
 			  headers: {
 				"Content-Type": "application/json",
-				Authorization: "Bearer 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"
 			  },
 			  body: JSON.stringify({
 				prompt: prompt,
@@ -56,7 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  }),
 			};
 	  
-			const response = await fetch("https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/generate_image", opts);
+			const response = await fetch(`${process.env.backendURL}api/generate_image`, opts);
 			if (!response.ok) {
 			  const errorResponse = await response.json();
 			  console.log("Error response:", errorResponse);
@@ -76,11 +75,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			method: "POST",
 			headers: {
 			  Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
-			  Bearer: "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"
 			}
 		  };
 	  
-		  fetch("https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/logout", opts)
+		  fetch(`${process.env.backendURL}api/logout`, opts)
 			.then(response => {
 			  if (response.ok) {
 				sessionStorage.removeItem("access_token");
@@ -102,7 +100,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  method: "POST",
 			  headers: {
 				"Content-Type": "application/json",
-				Authorization: "Bearer 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"
 			  },
 			  body: JSON.stringify({
 				username: username,
@@ -110,7 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
 	  
-			const resp = await fetch("https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/login", opts);
+			const resp = await fetch(`${process.env.backendURL}api/login`, opts);
 			if (resp.status !== 200) {
 			  console.log("THERE WAS A RESPONSE STATUS ERROR");
 			  return false;
@@ -134,7 +131,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  method: "POST",
 			  headers: {
 				"Content-Type": "application/json",
-				Authorization: "Bearer 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"
 			  },
 			  body: JSON.stringify({
 				username: username,
@@ -142,7 +138,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  })
 			};
 	  
-			const resp = await fetch("https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/signup", opts);
+			const resp = await fetch(`${process.env.backendURL}api/signup`, opts);
 	  
 			if (resp.status === 201 || resp.status === 200) {
 			  const data = await resp.json();
@@ -165,8 +161,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			try {
 			  const opts = {
 				method: "POST",
-				headers: { "Content-Type": "application/json",
-				Authorization: "Bearer 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" },
+				headers: { "Content-Type": "application/json",},
 				body: JSON.stringify({
 				  text: text,
 				  created_at: created_at,
@@ -184,7 +179,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				created_at: created_at,
 			  };
 	
-			  const resp = await fetch(`https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/comments`, {
+			  const resp = await fetch(`${process.env.backendURL}api/comments`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(dataObj),
@@ -220,12 +215,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			method: "POST",
 			headers: {
 			  "Content-Type": "application/json",
-			  Authorization: "Bearer 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",
 			},
 			body: JSON.stringify(payload),
 		  };
 	  
-		  fetch("https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/users/favorites", opts)
+		  fetch(`${process.env.backendURL}api/users/favorites`, opts)
 			.then((response) => response.json())
 			.then((data) => {
 			  actions.updateFavorites(data.favorites);
@@ -240,11 +234,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			headers: {
 			  Authorization: `Bearer ${store.token}`,
 			  "Content-Type": "application/json",
-			  Authorization: "Bearer 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",
 			},
 		  };
 	  
-		  fetch(`https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/users/favorites/${post_id}`, opts)
+		  fetch(`${process.env.backendURL}api/${post_id}`, opts)
 			.then((response) => response.json())
 			.then((data) => {
 			  actions.updateFavorites(data.favorites);
@@ -269,7 +262,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  };
 	  
 		  try {
-			const resp = await fetch("https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/hello", opts);
+			const resp = await fetch(`${process.env.backendURL}api/hello`, opts);
 	  
 			if (resp.status === 401) {
 			  console.log("Unauthorized: Token is invalid or expired");
@@ -289,10 +282,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 	  
 		explore: (index) => {
 		  const headers = {
-			Authorization: 'Bearer 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'
 		  };
 	  
-		  fetch(`https://brennybaker-urban-doodle-9vg7j65g5wrh9p-3001.preview.app.github.dev/api/single/${index}`, {
+		  fetch(`${process.env.backendURL}api/single/${index}`, {
 			headers: headers
 		  })
 			.then(response => response.json())

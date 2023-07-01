@@ -10,7 +10,7 @@ import os
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
-openai.api_key = ("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") #stored securely in config.py which is in the gitignore list
+openai.api_key = ("APIKEYHERE") #stored securely in config.py which is in the gitignore list
 openai.Model.list()
 
 

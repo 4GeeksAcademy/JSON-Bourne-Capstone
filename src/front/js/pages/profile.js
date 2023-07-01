@@ -55,10 +55,10 @@ const Profile = () => {
               />
               {image && <img src={image} alt="Preview" className="profile-image" />}
             </div>
-            <h3>Username</h3>
-            <p>Email: user@example.com</p>
-            <p>Location: City, Country</p>
-            <p>Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <h3>SalvadorDali</h3>
+            <p>Email: salvador@gmail.com</p>
+            <p>Location: Figueres, Spain</p>
+            <p>Bio: I make crazy art.</p>
           </div>
         </div>
       );
