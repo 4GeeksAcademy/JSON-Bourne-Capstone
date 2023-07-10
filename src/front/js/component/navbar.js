@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from "react";
-import { Context } from "../store/appContext";
+import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import classnames from "classnames";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -9,52 +10,49 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     actions.signout();
+    navigate("/");
   };
 
-  const handleHomeClick = () => {
-    if (store.token) {
-      navigate("/explore");
-    }
+  const handleExploreClick = () => {
+    navigate("/explore");
   };
-
-  useEffect(() => {
-    if (store.token && location.pathname === "/") {
-      // Redirect to "/explore" when user is logged in and home button is clicked
-      navigate("/explore");
-    }
-  }, [store.token, location.pathname, navigate]);
-
-  if (location.pathname === "/") {
-    // Render nothing when on the login screen
-    return null;
-  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
       <div className="container">
-        <Link
-          to="/"
-          className="navbar-brand mb-0 h1"
-          onClick={handleHomeClick}
+        <button
+          className={classnames("m-3 btn btn-warning", {
+            active: location.pathname === "/explore"
+          })}
+          onClick={handleExploreClick}
         >
-          {store.token ? "Home" : "Login"}
+          Explore
+        </button>
+        <Link
+          to="/generate"
+          className={classnames("m-3 btn btn-warning", {
+            active: location.pathname === "/generate"
+          })}
+        >
+          Generate
+        </Link>
+        <Link
+          to="/profile"
+          className={classnames("m-3 btn btn-warning", {
+            active: location.pathname === "/profile"
+          })}
+        >
+          Profile
         </Link>
         <div className="ml-auto">
-          {location.pathname !== "/signup" && !store.token ? (
-            <>
-              <Link to="/explore">
-                <button className="m-3 btn btn-warning">Explore</button>
-              </Link>
-              <Link to="/single">
-                <button className="m-3 btn btn-warning">Single</button>
-              </Link>
-            </>
+          {store.token ? (
+            <button className="m-3 btn btn-warning" onClick={handleLogout}>
+              Logout
+            </button>
           ) : (
-            store.token && (
-              <button className="m-3 btn btn-warning" onClick={handleLogout}>
-                Logout
-              </button>
-            )
+            <Link to="/" className="m-3 btn btn-warning">
+              Logout
+            </Link>
           )}
         </div>
       </div>

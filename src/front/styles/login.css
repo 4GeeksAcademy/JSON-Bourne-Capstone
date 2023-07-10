@@ -4,15 +4,13 @@ body {
     color: orange;
 }
 
-
-
 input{
     background-color: orange;
     color: black
 }
 
 .Text {
-    margin-top: 500px;
+    margin-top: 150px;
     font-size: 100%;
 }
 
@@ -21,5 +19,7 @@ h1 {
 }
 
 img{
+    width: 100px;
+    height: auto; 
     border-bottom: 25%;
 }

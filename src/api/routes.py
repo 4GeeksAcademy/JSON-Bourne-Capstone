@@ -3,17 +3,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, session
 from api.models import db, User, Post, Favorites, Comment
-from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import sys
 import openai
 import os
-from .models import Image
-from config import API_KEY
 
 api = Blueprint('api', __name__)
 app = Flask(__name__)
-openai.api_key = (API_KEY) #stored securely in config.py which is in the gitignore list
+openai.api_key = ("APIKEYHERE") #stored securely in config.py which is in the gitignore list
 openai.Model.list()
 
 
@@ -22,10 +19,14 @@ def signup():
     # Retrieve request data
     username = request.json.get('username')
     password = request.json.get('password')
+    # confirm_password = request.json.get('confirm_password')
 
     # Check if the email is already registered
     if User.query.filter_by(username=username).first():
-        return jsonify(message='Username already registered'), 409  
+        return jsonify(message='Username already registered'), 409 
+     
+    # if password != confirm_password:
+    #     return jsonify(message='Passwords do not match'), 200
 
     # Create a new user object
     new_user = User(username=username, password=password)
@@ -56,16 +57,16 @@ def login():
 
     # Generate access token
     access_token = create_access_token(identity=username)
+    print (access_token)
     return jsonify(access_token=access_token, user_id=user.id)
 
 
 @api.route('/generate_image', methods=['POST'])
-#@jwt_required
 def generate_image():
     data = request.get_json()
     prompt = data.get('prompt')
     number = data.get('number', 1)
-    size = data.get('size', '512x512')
+    size = data.get('size', '1024x1024')
     response_format = data.get('response_format', 'url')  # Change response_format to 'url'
     
     try:
@@ -114,21 +115,21 @@ def get_comments():
     all_comments= list(map(lambda comment:comment.serialize(),comment_list))
     return jsonify(all_comments), 200
 
-@api.route('/users/<int:id>', methods=['GET'])
-@jwt_required()
-def get_user_(id):
-    user = User.query.filter_by(id=id).first()
+# @api.route('/users/<int:id>', methods=['GET'])
+# @jwt_required()
+# def get_user_(id):
+#     user = User.query.filter_by(id=id).first()
 
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
+#     if not user:
+#         return jsonify({'message': 'User not found'}), 404
 
-    request_token = request.headers.get('Authorization', '').split('Bearer ')[1] if 'Authorization' in request.headers else None
-    if 'access_token' not in session or session['access_token'] != request_token:
-        if request_token:
-            session['access_token'] = request_token
-        return jsonify({'message': 'Invalid access token'}), 401
+#     request_token = request.headers.get('Authorization', '').split('Bearer ')[1] if 'Authorization' in request.headers else None
+#     if 'access_token' not in session or session['access_token'] != request_token:
+#         if request_token:
+#             session['access_token'] = request_token
+#         return jsonify({'message': 'Invalid access token'}), 401
 
-    return jsonify(user.serialize()), 200
+#     return jsonify(user.serialize()), 200
 
 @api.route('/posts', methods=['GET'])
 def get_posts():
@@ -196,7 +197,6 @@ def get_single(theid):
     return jsonify({'item': item.serialize()}), 200
 
 @api.route('/users/favorites', methods=['POST'])
-@jwt_required()
 def add_favorite():
     data = request.get_json()
     print(data)
@@ -234,7 +234,6 @@ def add_favorite():
     return jsonify({'message': 'Favorite added successfully', 'favorites': favorites_data}), 200
 
 @api.route('/users/favorites/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_favorite(id):
     current_user_id = get_jwt_identity()
     favorite = Favorites.query.get(id)
@@ -269,4 +268,3 @@ def hello():
 
 if __name__ == "__main__":
     api.run()
-

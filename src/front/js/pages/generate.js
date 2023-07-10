@@ -1,39 +1,48 @@
 import React, { useState, useContext } from 'react';
+import { Context } from '../store/appContext';
 import "../../styles/generate.css";
-import { Context } from "../store/appContext";
 
 const Generate = () => {
   const [prompt, setPrompt] = useState('');
-  const [images, setImages] = useState([]);
+  const [generatedImage, setGeneratedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { actions } = useContext(Context); // Retrieve actions from context
+  const { actions } = useContext(Context);
 
   const handleGenerate = async (e) => {
     e.preventDefault();
-    const generatedImages = await actions.generate_image(prompt, 1, '512x512', 'url');
-    setImages(generatedImages);
+    setIsLoading(true);
+    const generatedImages = await actions.generate_image(prompt, 1, '1024x1024', 'url');
+    if (generatedImages && generatedImages.length > 0) {
+      setGeneratedImage(generatedImages[0]);
+    }
+    setIsLoading(false);
   };
 
   return (
-    <div className="OpenAIbody">
-      <h5>"Τα μεγάλα αποτελέσματα απαιτούν μεγάλες φιλοδοξίες" - Ηράκλειτος </h5>
-      <form id="image-form" onSubmit={handleGenerate}>
-        <div className="form-control">
-          <input 
-            type="text" 
-            id="prompt" 
-            placeholder="Your Prompt" 
+    <div className="text-center mt-5">
+      <h5 className="text-orange mb-4">"Τα μεγάλα αποτελέσματα απαιτούν μεγάλες φιλοδοξίες" - Ηράκλειτος</h5>
+      <form onSubmit={handleGenerate}>
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Your Prompt"
             value={prompt}
-            onChange={e => setPrompt(e.target.value)}
+            onChange={(e) => setPrompt(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-warning">Generate</button>
+        <button className="btn btn-warning" type="submit" style={{ width: '150px', height: '50px' }}>
+          Generate
+        </button>
       </form>
-      {images && images.length > 0 && images.map((image, index) => (
-        <img key={index} src={image} alt="Generated" />
-      ))}
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        generatedImage && <img src={generatedImage} alt="Generated" className="img-fluid" />
+      )}
     </div>
   );
 };
 
-export default Generate
+export default Generate;

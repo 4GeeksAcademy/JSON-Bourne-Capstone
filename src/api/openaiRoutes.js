@@ -1,9 +1,9 @@
-const express = require('express');
-const { generateImage } = require('../fileController');
-const router = express.Router();
+// const express = require('express');
+// const { generateImage } = require('../fileController');
+// const router = express.Router();
 
 
-router.post('/generateimage', generateImage);
+// router.post('/generateimage', generateImage);
 
 
-module.exports = router;
+// module.exports = router;
